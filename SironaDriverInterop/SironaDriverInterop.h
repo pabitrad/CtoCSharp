@@ -501,7 +501,6 @@ namespace SironaDriverInterop {
 		*/
 		static Int32 firmware_upload_chunk(SironaHandle^% handle,
 			UInt32 cnunk_no,
-			UInt32 chunk_size,
 			SironaValue^% firmware_chunk);
 
 		/**

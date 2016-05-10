@@ -237,12 +237,20 @@ Int32 SironaDriverInterop::SironaDriver::get_type(SironaHandle^% handle)
 
 Int32 SironaDriverInterop::SironaDriver::parameter_read(SironaHandle^% handle, String^ name, SironaValue^% value)
 {
-	return 0;
+	IntPtr NPtr = Marshal::StringToHGlobalAnsi(name);
+	char* NativeName = static_cast<char*>(NPtr.ToPointer());
+	int Return = sironadriver_parameter_read(handle->Handle, name->Length, NativeName, value->GetRawSize(), value->GetRawValue());
+	Marshal::FreeHGlobal(NPtr);
+	return Return;
 }
 
 Int32 SironaDriverInterop::SironaDriver::parameter_write(SironaHandle^% handle, String^ name, SironaValue^% value)
 {
-	return 0;
+	IntPtr NPtr = Marshal::StringToHGlobalAnsi(name);
+	char* NativeName = static_cast<char*>(NPtr.ToPointer());
+	int Return = sironadriver_parameter_write(handle->Handle, name->Length, NativeName, value->GetRawSize(), value->GetRawValue());
+	Marshal::FreeHGlobal(NPtr);
+	return Return;
 }
 
 Int32 SironaDriverInterop::SironaDriver::parameter_commit(SironaHandle^% handle)
@@ -260,7 +268,13 @@ Int32 SironaDriverInterop::SironaDriver::get_number_of_parameters(SironaHandle^%
 
 Int32 SironaDriverInterop::SironaDriver::parameter_read_index(SironaHandle^% handle, UInt32 parameter_index, String^% name, SironaValue^% value)
 {
-	return 0;
+	char NativeName[20];
+	uint32_t NameLength = 20;
+	uint32_t ValueSize = value->GetRawSize();
+	int Return = sironadriver_parameter_read_index(handle->Handle, parameter_index, &NameLength, &NativeName, &ValueSize, value->GetRawValue());
+	value->Allocate(ValueSize);
+	name = msclr::interop::marshal_as<String^>(NativeName);
+	return Return;
 }
 
 Int32 SironaDriverInterop::SironaDriver::bulk_get_chunk_size(SironaHandle^% handle, UInt32% chunk_size)
@@ -273,12 +287,24 @@ Int32 SironaDriverInterop::SironaDriver::bulk_get_chunk_size(SironaHandle^% hand
 
 Int32 SironaDriverInterop::SironaDriver::bulk_read_data(SironaHandle^% handle, UInt32% seq_no, SironaValue^% data)
 {
-	return 0;
+	uint32_t seqno = 0;
+	uint32_t datasize = data->GetRawSize();
+	int Return = sironadriver_bulk_read_data(handle->Handle, &seqno, &datasize, data->GetRawValue());
+	seq_no = seqno;
+	data->Allocate(datasize);
+	return Return;
 }
 
 Int32 SironaDriverInterop::SironaDriver::liveECG_bulk_read_data(SironaHandle^% handle, UInt32% seq_no, UInt32% status, SironaValue^% data)
 {
-	return 0;
+	uint32_t seqno = 0;
+	uint32_t newstatus = 0;
+	uint32_t datasize = data->GetRawSize();
+	int Return = sironadriver_liveECG_bulk_read_data(handle->Handle, &seqno, &newstatus, &datasize, data->GetRawValue());
+	seq_no = seqno;
+	status = newstatus;
+	data->Allocate(datasize);
+	return Return;
 }
 
 Int32 SironaDriverInterop::SironaDriver::event_get_count(SironaHandle^% handle, UInt32% event_count)
@@ -291,7 +317,11 @@ Int32 SironaDriverInterop::SironaDriver::event_get_count(SironaHandle^% handle, 
 
 Int32 SironaDriverInterop::SironaDriver::event_get_header_item(SironaHandle^% handle, UInt32 event_no, String^ item, SironaValue^% value)
 {
-	return 0;
+	IntPtr NPtr = Marshal::StringToHGlobalAnsi(item);
+	char* NativeName = static_cast<char*>(NPtr.ToPointer());
+	int Return = sironadriver_event_get_header_item(handle->Handle, event_no, item->Length, NativeName, value->GetRawSize(), value->GetRawValue());
+	Marshal::FreeHGlobal(NPtr);
+	return Return;
 }
 
 Int32 SironaDriverInterop::SironaDriver::event_start_transfer(SironaHandle^% handle, UInt32 event_no, UInt32 first_chunk_no, UInt32 last_chunk_no)
@@ -380,9 +410,9 @@ Int32 SironaDriverInterop::SironaDriver::firmware_upload_start(SironaHandle^% ha
 	return sironadriver_firmware_upload_start(handle->Handle, fw_size);
 }
 
-Int32 SironaDriverInterop::SironaDriver::firmware_upload_chunk(SironaHandle^% handle, UInt32 cnunk_no, UInt32 chunk_size, SironaValue^% firmware_chunk)
+Int32 SironaDriverInterop::SironaDriver::firmware_upload_chunk(SironaHandle^% handle, UInt32 cnunk_no, SironaValue^% firmware_chunk)
 {
-	return 0;
+	return sironadriver_firmware_upload_chunk(handle->Handle, cnunk_no, firmware_chunk->GetRawSize(), firmware_chunk->GetRawValue());
 }
 
 Int32 SironaDriverInterop::SironaDriver::firmware_apply(SironaHandle^% handle)
