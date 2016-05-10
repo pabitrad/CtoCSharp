@@ -947,8 +947,8 @@ namespace SironaDriverApplication
 
                 byte[] AsBytes = liveEcgDataPacket.GetValueAsByteArray();
 
-                Console.Write("The live Ecg data packet with sequence number %d was downloaded with success.\n", receivedChunkSequenceNumber);
-                Console.Write("Live Ecg data packet: 0x%x, 0x%x, 0x%x, 0x%x, 0x%x ...\n", AsBytes[0], AsBytes[1], AsBytes[2], AsBytes[3], AsBytes[4]);
+                Console.Write("The live Ecg data packet with sequence number {0} was downloaded with success.\n", receivedChunkSequenceNumber);
+                Console.Write("Live Ecg data packet: 0x{0}, 0x{1}, 0x{2}, 0x{3}, 0x{4} ...\n", AsBytes[0], AsBytes[1], AsBytes[2], AsBytes[3], AsBytes[4]);
 
             } while (chunkSequenceNumber <= 10);
 
@@ -976,7 +976,7 @@ namespace SironaDriverApplication
             }
 
             Console.Write("Getting bulk chunk size from the device finished with success.\n");
-            Console.Write("The bulk chunk size is %d bytes.\n", chunkSize);
+            Console.Write("The bulk chunk size is {0} bytes.\n", chunkSize);
 
             if (chunkSize <= 0)
             {
@@ -1013,7 +1013,7 @@ namespace SironaDriverApplication
                 retVal = SironaDriver.bulk_read_data(ref handle, ref receivedChunkSequenceNumber, ref batteryFileDataChunk);
                 if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
                 {
-                    Console.Write("Error downloading the battery.log file data chunk %d.\n", chunkSequenceNumber + 1);
+                    Console.Write("Error downloading the battery.log file data chunk {0}.\n", chunkSequenceNumber + 1);
                     Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
                     batteryLogFile.Close();
                     return retVal;
@@ -1030,7 +1030,7 @@ namespace SironaDriverApplication
                     {
 
                         Console.Write("Wrong File bulk data chunk sequence number received.\n");
-                        Console.Write("Expected chunk sequence number: %d Received chunk sequence number: %d.\n", chunkSequenceNumber + 1, receivedChunkSequenceNumber);
+                        Console.Write("Expected chunk sequence number: {0} Received chunk sequence number: {1}.\n", chunkSequenceNumber + 1, receivedChunkSequenceNumber);
 
                         retVal = SironaDriver.file_stop_transfer(ref handle);
                         if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
@@ -1050,7 +1050,7 @@ namespace SironaDriverApplication
 
                 chunkSequenceNumber++;
 
-                Console.Write("The battery.log file data chunk %d was downloaded with success.\n", chunkSequenceNumber);
+                Console.Write("The battery.log file data chunk {0} was downloaded with success.\n", chunkSequenceNumber);
 
                 byte[] AsArray = batteryFileDataChunk.GetValueAsByteArray();
                 foreach (var j in AsArray)
