@@ -1,0 +1,7 @@
+d:\users\brandon\documents\visual studio 2015\Projects\SironaDriverApplication\SironaDriverApplication\bin\Release\SironaDriverApplication.exe.config
+d:\users\brandon\documents\visual studio 2015\Projects\SironaDriverApplication\SironaDriverApplication\bin\Release\sironadriver.dll
+d:\users\brandon\documents\visual studio 2015\Projects\SironaDriverApplication\SironaDriverApplication\bin\Release\SironaDriverApplication.exe
+d:\users\brandon\documents\visual studio 2015\Projects\SironaDriverApplication\SironaDriverApplication\bin\Release\SironaDriverApplication.pdb
+d:\users\brandon\documents\visual studio 2015\Projects\SironaDriverApplication\SironaDriverApplication\obj\Release\SironaDriverApplication.exe
+d:\users\brandon\documents\visual studio 2015\Projects\SironaDriverApplication\SironaDriverApplication\obj\Release\SironaDriverApplication.pdb
+d:\users\brandon\documents\visual studio 2015\Projects\SironaDriverApplication\SironaDriverApplication\obj\Release\SironaDriverApplication.csprojResolveAssemblyReference.cache
