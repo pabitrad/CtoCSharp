@@ -20,13 +20,13 @@ namespace SironaDriverInterop {
 	public ref class SironaValue
 	{
 	private:
-		void* Value;
-		size_t Size;
+		IntPtr^ Value;
+		UInt32 Size;
 
 	public:
-		void SetRawValue(void* Value, size_t Size);
+		void SetValue(IntPtr^ Value, uint32_t Size);
 		void* GetRawValue();
-		size_t GetRawSize();
+		uint32_t GetRawSize();
 
 		void SetValueAsUInt16(UInt16 Int);
 		void SetValueAsUInt16Array(array<UInt16>^ Int);

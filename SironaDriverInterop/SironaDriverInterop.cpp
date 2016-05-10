@@ -6,20 +6,20 @@
 
 using namespace System::Runtime::InteropServices;
 
-void SironaDriverInterop::SironaValue::SetRawValue(void * Value, size_t Size)
+void SironaDriverInterop::SironaValue::SetValue(IntPtr^ Value, UInt32 Size)
 {
 	this->Value = Value;
 	this->Size = Size;
 }
 
-void * SironaDriverInterop::SironaValue::GetRawValue()
+void* SironaDriverInterop::SironaValue::GetRawValue()
 {
-	return Value;
+	return Value->ToPointer();
 }
 
-size_t SironaDriverInterop::SironaValue::GetRawSize()
+uint32_t SironaDriverInterop::SironaValue::GetRawSize()
 {
-	return Size;
+	return (uint32_t)Size;
 }
 
 void SironaDriverInterop::SironaValue::SetValueAsUInt16(UInt16 Int)

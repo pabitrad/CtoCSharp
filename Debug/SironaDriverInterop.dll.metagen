@@ -20,7 +20,7 @@ Class SironaDriverInterop.SironaEnumHandle: AutoLayout, AnsiClass, Class, Public
 Class SironaDriverInterop.SironaValue: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Methods:
-    SetRawValue(Void*, UInt32): PrivateScope, Public, HideBySig
+    SetValue(ValueType IntPtr IsBoxed, UInt32): PrivateScope, Public, HideBySig
     GetRawValue(): PrivateScope, Public, HideBySig
     GetRawSize(): PrivateScope, Public, HideBySig
     SetValueAsUInt16(UInt16): PrivateScope, Public, HideBySig
