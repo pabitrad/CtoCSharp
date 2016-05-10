@@ -59,8 +59,54 @@ namespace SironaDriverApplication
             return retVal;
         }
 
+        static void TestSironaValue()
+        {
+            var Value = new SironaValue();
+            string Test = "Hi, I'm a string, we're going to test the SironaValue class!";
+
+            Value.SetValueAsString(Test);
+
+            Console.WriteLine(Value.GetValueAsString());
+
+            Console.WriteLine("Inputting integer 30 for all int types");
+            Value.SetValueAsByte(30);
+            Console.WriteLine(Value.GetValueAsByte());
+            Value.SetValueAsInt16(30);
+            Console.WriteLine(Value.GetValueAsInt16());
+            Value.SetValueAsUInt16(30);
+            Console.WriteLine(Value.GetValueAsUInt16());
+            Value.SetValueAsInt32(30);
+            Console.WriteLine(Value.GetValueAsInt32());
+            Value.SetValueAsUInt32(30);
+            Console.WriteLine(Value.GetValueAsUInt32());
+
+            Console.WriteLine("Testing array functions, inputting the following: {0,1,2,3,0}");
+            Value.SetValueAsByteArray(new byte[] { 0, 1, 2, 3, 0 });
+            var AsArray = Value.GetValueAsByteArray();
+            Console.WriteLine("{0}, {1}, {2}, {3}, {4}", AsArray[0], AsArray[1], AsArray[2], AsArray[3], AsArray[4]);
+
+            Value.SetValueAsInt16Array(new short[] { 0, 1, 2, 3, 0 });
+            var AsArray2 = Value.GetValueAsInt16Array();
+            Console.WriteLine("{0}, {1}, {2}, {3}, {4}", AsArray2[0], AsArray2[1], AsArray2[2], AsArray2[3], AsArray2[4]);
+
+            Value.SetValueAsUInt16Array(new ushort[] { 0, 1, 2, 3, 0 });
+            var AsArray3 = Value.GetValueAsUInt16Array();
+            Console.WriteLine("{0}, {1}, {2}, {3}, {4}", AsArray3[0], AsArray3[1], AsArray3[2], AsArray3[3], AsArray3[4]);
+
+            Value.SetValueAsInt32Array(new int[] { 0, 1, 2, 3, 0 });
+            var AsArray4 = Value.GetValueAsInt32Array();
+            Console.WriteLine("{0}, {1}, {2}, {3}, {4}", AsArray4[0], AsArray4[1], AsArray4[2], AsArray4[3], AsArray4[4]);
+
+            Value.SetValueAsUInt32Array(new uint[] { 0, 1, 2, 3, 0 });
+            var AsArray5 = Value.GetValueAsUInt32Array();
+            Console.WriteLine("{0}, {1}, {2}, {3}, {4}", AsArray5[0], AsArray5[1], AsArray5[2], AsArray5[3], AsArray5[4]);
+
+        }
+
         static int Main(string[] args)
         {
+            TestSironaValue();
+
             string usageString = "Usage: SironaDriverApplication.exe <test-to-be-executed> <-bt or -usb> <device-serial-number>";
             bool deviceToConnectFound = false;
 

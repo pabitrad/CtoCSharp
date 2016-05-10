@@ -57,8 +57,8 @@ namespace SironaDriverApplication
         public static int test_parameter_read_all(ref SironaHandle handle)
         {
             int retVal = (int)ErrorCode.DRIVER_NO_ERROR;
-            ValueType Parameters = 0;
-            retVal = get_number_of_parameters(ref handle, ref Parameters);
+            uint NumParameters = 0;
+            retVal = get_number_of_parameters(ref handle, ref NumParameters);
             if (retVal != (int)ErrorCode.DRIVER_NO_ERROR)
             {
                 Console.Write("Error getting total number of configuration parameters from the device.\n");
@@ -66,7 +66,6 @@ namespace SironaDriverApplication
                 return retVal;
             }
 
-            uint NumParameters = (uint)Parameters;
             Console.Write("There are {0} configuration parameters on the device.\n", NumParameters);
 
             uint i = 0;
@@ -117,9 +116,9 @@ namespace SironaDriverApplication
         public static int test_event_get_count(ref SironaHandle handle)
         {
             int retVal = (int)ErrorCode.DRIVER_NO_ERROR;
-            ValueType Out = 0;
-            retVal = event_get_count(ref handle, ref Out);
-            uint eventCount = (uint)Out;
+            uint eventCount = 0;
+            retVal = event_get_count(ref handle, ref eventCount);
+            
             if (retVal != (int)ErrorCode.DRIVER_NO_ERROR)
             {
                 Console.Write("Error getting the number of recorded events from the device.\n");
@@ -135,9 +134,9 @@ namespace SironaDriverApplication
         public static int test_event_get_header_item(ref SironaHandle handle)
         {
             int retVal = (int)ErrorCode.DRIVER_NO_ERROR;
-            ValueType Out = 0;
-            retVal = event_get_count(ref handle, ref Out);
-            uint eventCount = (uint)Out;
+            uint eventCount = 0;
+            retVal = event_get_count(ref handle, ref eventCount);
+            
             if (retVal != (int)ErrorCode.DRIVER_NO_ERROR)
             {
                 Console.Write("Error getting the number of recorded events from the device.\n");

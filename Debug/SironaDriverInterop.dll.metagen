@@ -19,8 +19,11 @@ Class SironaDriverInterop.SironaEnumHandle: AutoLayout, AnsiClass, Class, Public
     Void* Handle : Public
 Class SironaDriverInterop.SironaValue: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    System.IDisposable
   Methods:
-    SetValue(ValueType IntPtr IsBoxed, UInt32): PrivateScope, Public, HideBySig
+    Allocate(UInt32): PrivateScope, Public, HideBySig
+    SetValue(Void*, UInt32): PrivateScope, Public, HideBySig
     GetRawValue(): PrivateScope, Public, HideBySig
     GetRawSize(): PrivateScope, Public, HideBySig
     SetValueAsUInt16(UInt16): PrivateScope, Public, HideBySig
@@ -46,36 +49,37 @@ Class SironaDriverInterop.SironaValue: AutoLayout, AnsiClass, Class, Public, Bef
     GetValueAsByte(): PrivateScope, Public, HideBySig
     GetValueAsByteArray(): PrivateScope, Public, HideBySig
     GetValueSize(): PrivateScope, Public, HideBySig
+    Dispose(): PrivateScope, Public, Final, Virtual, HideBySig
 Class SironaDriverInterop.SironaDriver: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Methods:
-    enum_open(SironaEnumHandle&, ValueType Int32 IsBoxed): PrivateScope, Public, Static, HideBySig
+    enum_open(SironaEnumHandle&, Int32): PrivateScope, Public, Static, HideBySig
     enum_next(SironaEnumHandle&, String&, String&, Int32&): PrivateScope, Public, Static, HideBySig
     enum_close(SironaEnumHandle&): PrivateScope, Public, Static, HideBySig
-    open(ValueType IsConst Int32 IsBoxed, String, SironaHandle&, Int32[]): PrivateScope, Public, Static, HideBySig
+    open(Int32 IsConst, String, SironaHandle&, Int32[]): PrivateScope, Public, Static, HideBySig
     close(SironaHandle&): PrivateScope, Public, Static, HideBySig
     get_type(SironaHandle&): PrivateScope, Public, Static, HideBySig
     parameter_read(SironaHandle&, String, SironaValue&): PrivateScope, Public, Static, HideBySig
     parameter_write(SironaHandle&, String, SironaValue&): PrivateScope, Public, Static, HideBySig
     parameter_commit(SironaHandle&): PrivateScope, Public, Static, HideBySig
-    get_number_of_parameters(SironaHandle&, ValueType&): PrivateScope, Public, Static, HideBySig
-    parameter_read_index(SironaHandle&, ValueType UInt32 IsBoxed, String&, SironaValue&): PrivateScope, Public, Static, HideBySig
-    bulk_get_chunk_size(SironaHandle&, ValueType&): PrivateScope, Public, Static, HideBySig
-    bulk_read_data(SironaHandle&, ValueType&, SironaValue&): PrivateScope, Public, Static, HideBySig
-    liveECG_bulk_read_data(SironaHandle&, ValueType&, ValueType&, SironaValue&): PrivateScope, Public, Static, HideBySig
-    event_get_count(SironaHandle&, ValueType&): PrivateScope, Public, Static, HideBySig
-    event_get_header_item(SironaHandle&, ValueType UInt32 IsBoxed, String, SironaValue&): PrivateScope, Public, Static, HideBySig
-    event_start_transfer(SironaHandle&, ValueType UInt32 IsBoxed, ValueType UInt32 IsBoxed, ValueType UInt32 IsBoxed): PrivateScope, Public, Static, HideBySig
+    get_number_of_parameters(SironaHandle&, UInt32&): PrivateScope, Public, Static, HideBySig
+    parameter_read_index(SironaHandle&, UInt32, String&, SironaValue&): PrivateScope, Public, Static, HideBySig
+    bulk_get_chunk_size(SironaHandle&, UInt32&): PrivateScope, Public, Static, HideBySig
+    bulk_read_data(SironaHandle&, UInt32&, SironaValue&): PrivateScope, Public, Static, HideBySig
+    liveECG_bulk_read_data(SironaHandle&, UInt32&, UInt32&, SironaValue&): PrivateScope, Public, Static, HideBySig
+    event_get_count(SironaHandle&, UInt32&): PrivateScope, Public, Static, HideBySig
+    event_get_header_item(SironaHandle&, UInt32, String, SironaValue&): PrivateScope, Public, Static, HideBySig
+    event_start_transfer(SironaHandle&, UInt32, UInt32, UInt32): PrivateScope, Public, Static, HideBySig
     event_stop_transfer(SironaHandle&): PrivateScope, Public, Static, HideBySig
     event_erase_all(SironaHandle&): PrivateScope, Public, Static, HideBySig
     event_record(SironaHandle&): PrivateScope, Public, Static, HideBySig
     event_record_cancel(SironaHandle&): PrivateScope, Public, Static, HideBySig
-    event_mark_sent(SironaHandle&, ValueType UInt32 IsBoxed): PrivateScope, Public, Static, HideBySig
-    annotation_get_size(SironaHandle&, ValueType UInt32 IsBoxed, ValueType&): PrivateScope, Public, Static, HideBySig
-    annotation_start_transfer(SironaHandle&, ValueType UInt32 IsBoxed, ValueType UInt32 IsBoxed, ValueType UInt32 IsBoxed): PrivateScope, Public, Static, HideBySig
+    event_mark_sent(SironaHandle&, UInt32): PrivateScope, Public, Static, HideBySig
+    annotation_get_size(SironaHandle&, UInt32, UInt32&): PrivateScope, Public, Static, HideBySig
+    annotation_start_transfer(SironaHandle&, UInt32, UInt32, UInt32): PrivateScope, Public, Static, HideBySig
     annotation_stop_transfer(SironaHandle&): PrivateScope, Public, Static, HideBySig
-    holter_get_size(SironaHandle&, ValueType&): PrivateScope, Public, Static, HideBySig
-    holter_start_transfer(SironaHandle&, ValueType UInt32 IsBoxed, ValueType UInt32 IsBoxed): PrivateScope, Public, Static, HideBySig
+    holter_get_size(SironaHandle&, UInt32&): PrivateScope, Public, Static, HideBySig
+    holter_start_transfer(SironaHandle&, UInt32, UInt32): PrivateScope, Public, Static, HideBySig
     holter_stop_transfer(SironaHandle&): PrivateScope, Public, Static, HideBySig
     holter_erase(SironaHandle&): PrivateScope, Public, Static, HideBySig
     liveECG_start_streaming(SironaHandle&): PrivateScope, Public, Static, HideBySig
@@ -83,14 +87,14 @@ Class SironaDriverInterop.SironaDriver: AutoLayout, AnsiClass, Class, Public, Be
     firmware_upload_start(SironaHandle&, UInt32): PrivateScope, Public, Static, HideBySig
     firmware_upload_chunk(SironaHandle&, UInt32, UInt32, SironaValue&): PrivateScope, Public, Static, HideBySig
     firmware_apply(SironaHandle&): PrivateScope, Public, Static, HideBySig
-    get_battery_voltage(SironaHandle&, ValueType&): PrivateScope, Public, Static, HideBySig
+    get_battery_voltage(SironaHandle&, UInt32&): PrivateScope, Public, Static, HideBySig
     device_ping(SironaHandle&): PrivateScope, Public, Static, HideBySig
     start_procedure(SironaHandle&): PrivateScope, Public, Static, HideBySig
     stop_procedure(SironaHandle&): PrivateScope, Public, Static, HideBySig
     start_status_stream(SironaHandle&, UInt32): PrivateScope, Public, Static, HideBySig
     stop_status_stream(SironaHandle&): PrivateScope, Public, Static, HideBySig
     soft_reset(SironaHandle&): PrivateScope, Public, Static, HideBySig
-    set_device_time(SironaHandle&, ValueType UInt32 IsBoxed, ValueType UInt32 IsBoxed): PrivateScope, Public, Static, HideBySig
+    set_device_time(SironaHandle&, UInt32, UInt32): PrivateScope, Public, Static, HideBySig
     file_start_transfer(SironaHandle&, String): PrivateScope, Public, Static, HideBySig
     file_stop_transfer(SironaHandle&): PrivateScope, Public, Static, HideBySig
-    error_get_string(ValueType Int32 IsBoxed): PrivateScope, Public, Static, HideBySig
+    error_get_string(Int32): PrivateScope, Public, Static, HideBySig
