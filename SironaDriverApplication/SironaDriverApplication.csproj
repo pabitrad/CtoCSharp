@@ -74,6 +74,7 @@
   <ItemGroup>
     <Content Include="libgcc_s_dw2-1.dll" />
     <Content Include="libwinpthread-1.dll" />
+    <Content Include="sironadriver.dll" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">

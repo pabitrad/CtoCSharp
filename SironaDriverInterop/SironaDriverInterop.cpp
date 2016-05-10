@@ -107,24 +107,24 @@ UInt32^ SironaDriverInterop::SironaValue::GetValueSize()
 
 Int32^ SironaDriverInterop::SironaDriver::enum_open(SironaEnumHandle^% enum_handle, Int32^ type)
 {
-	void* Ptr = enum_handle->Handle;
-	return sironadriver_enum_open(&Ptr, (int)type);
+	void* Ptr = nullptr;
+	int Return = sironadriver_enum_open(&Ptr, (int)type);
+	enum_handle->Handle = Ptr;
+	return Return;
 }
 
 Int32^ SironaDriverInterop::SironaDriver::enum_next(SironaEnumHandle^% enum_handle, String^% device_serial_number, String^% comm_port_name, Int32% connection_type)
 {
-	void* Ptr = enum_handle->Handle;
 	IntPtr SNPtr = Marshal::StringToHGlobalAnsi(device_serial_number);
 	IntPtr CPPtr = Marshal::StringToHGlobalAnsi(comm_port_name);
 	char* NativeSerialNumber = static_cast<char*>(SNPtr.ToPointer());
 	char* NativePortName = static_cast<char*>(CPPtr.ToPointer());
 	int NativeType = (int)connection_type;
-	int Return = sironadriver_enum_next(&Ptr, NativeSerialNumber, NativePortName, &NativeType);
+	int Return = sironadriver_enum_next(enum_handle->Handle, NativeSerialNumber, NativePortName, &NativeType);
 
 	device_serial_number = msclr::interop::marshal_as<String^>((const char*)NativeSerialNumber);
 	comm_port_name = msclr::interop::marshal_as<String^>((const char*)NativePortName);
 	connection_type = (Int32)NativeType;
-	enum_handle->Handle = Ptr;
 
 	Marshal::FreeHGlobal(SNPtr);
 	Marshal::FreeHGlobal(CPPtr);
@@ -134,8 +134,7 @@ Int32^ SironaDriverInterop::SironaDriver::enum_next(SironaEnumHandle^% enum_hand
 
 void SironaDriverInterop::SironaDriver::enum_close(SironaEnumHandle^% enum_handle)
 {
-	void* Ptr = enum_handle->Handle;
-	return sironadriver_enum_close(&Ptr);
+	return sironadriver_enum_close(enum_handle->Handle);
 }
 
 static int g_key[] = { 0x000000CE, 0x000000CA, 0x000000CA, 0x000000FE };
@@ -163,7 +162,8 @@ void SironaDriverInterop::SironaDriver::close(SironaHandle^% handle)
 
 Int32^ SironaDriverInterop::SironaDriver::get_type(SironaHandle^% handle)
 {
-	return 0;
+	void* Ptr = handle->Handle;
+	return sironadriver_get_type(&Ptr);
 }
 
 Int32^ SironaDriverInterop::SironaDriver::parameter_read(SironaHandle^% handle, String^ name, SironaValue^ value)
@@ -178,7 +178,7 @@ Int32^ SironaDriverInterop::SironaDriver::parameter_write(SironaHandle^% handle,
 
 Int32^ SironaDriverInterop::SironaDriver::parameter_commit(SironaHandle^% handle)
 {
-	return 0;
+	return sironadriver_parameter_commit((void*)handle->Handle);
 }
 
 Int32^ SironaDriverInterop::SironaDriver::get_number_of_parameters(SironaHandle^% handle, UInt32^ number_of_parameters)
@@ -313,51 +313,54 @@ Int32^ SironaDriverInterop::SironaDriver::get_battery_voltage(SironaHandle^% han
 
 Int32^ SironaDriverInterop::SironaDriver::device_ping(SironaHandle^% handle)
 {
-	return 0;
+	return sironadriver_device_ping(handle->Handle);
 }
 
 Int32^ SironaDriverInterop::SironaDriver::start_procedure(SironaHandle^% handle)
 {
-	return 0;
+	return sironadriver_start_procedure(handle->Handle);
 }
 
 Int32^ SironaDriverInterop::SironaDriver::stop_procedure(SironaHandle^% handle)
 {
-	return 0;
+	return sironadriver_stop_procedure(handle->Handle);
 }
 
 Int32^ SironaDriverInterop::SironaDriver::start_status_stream(SironaHandle^% handle, UInt32 parameter)
 {
-	return 0;
+	return sironadriver_start_status_stream(handle->Handle, (uint32_t)parameter);
 }
 
 Int32^ SironaDriverInterop::SironaDriver::stop_status_stream(SironaHandle^% handle)
 {
-	return 0;
+	return sironadriver_stop_status_stream(handle->Handle);
 }
 
 Int32^ SironaDriverInterop::SironaDriver::soft_reset(SironaHandle^% handle)
 {
-	return 0;
+	return sironadriver_soft_reset(handle->Handle);
 }
 
 Int32^ SironaDriverInterop::SironaDriver::set_device_time(SironaHandle^% handle, UInt32^ utc_time, UInt32^ time_zone)
 {
-	return 0;
+	return sironadriver_set_device_time(handle->Handle, (uint32_t)utc_time, (uint32_t)time_zone);
 }
 
 Int32^ SironaDriverInterop::SironaDriver::file_start_transfer(SironaHandle^% handle, String^ file_name)
 {
-	return 0;
+	IntPtr FNPtr = Marshal::StringToHGlobalAnsi(file_name);
+	char* NativeFileName = static_cast<char*>(FNPtr.ToPointer());
+	int Return = sironadriver_file_start_transfer(handle->Handle, sizeof(NativeFileName), NativeFileName);
+	Marshal::FreeHGlobal(FNPtr);
+	return Return;
 }
 
 Int32^ SironaDriverInterop::SironaDriver::file_stop_transfer(SironaHandle^% handle)
 {
-	return 0;
+	return sironadriver_file_stop_transfer(handle->Handle);
 }
 
 String^ SironaDriverInterop::SironaDriver::error_get_string(Int32^ code)
 {
-	throw gcnew System::NotImplementedException();
-	// TODO: insert return statement here
+	return msclr::interop::marshal_as<String^>(sironadriver_error_get_string((int)code));
 }
