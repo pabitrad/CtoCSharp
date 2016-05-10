@@ -227,7 +227,7 @@ namespace SironaDriverApplication
                 retVal = SironaTests.test_event_get_header_item(ref handle);
 
             }
-            /*else if (string.Equals(args[0], "test-event-download"))
+            else if (string.Equals(args[0], "test-event-download"))
             {
                 retVal = SironaTests.test_event_download(ref handle);
 
@@ -254,7 +254,7 @@ namespace SironaDriverApplication
             }
             else if (string.Equals(args[0], "test-live-ecg-streaming"))
             {
-                if (g_devType != DriverDeviceCode.USB)
+                if (g_devType != SironaDriverConstants.DriverDeviceCode.USB)
                 {
                     retVal = SironaTests.test_live_ecg_streaming(ref handle);
                 }
@@ -281,7 +281,7 @@ namespace SironaDriverApplication
             }
             else if (string.Equals(args[0], "test-status-stream-cable-id"))
             {
-                if (g_devType != DriverDeviceCode.USB)
+                if (g_devType != SironaDriverConstants.DriverDeviceCode.USB)
                 {
                     retVal = SironaTests.test_status_stream_cable_id(ref handle);
                 }
@@ -294,8 +294,7 @@ namespace SironaDriverApplication
             else if (string.Equals(args[0], "test-file-download"))
             {
                 retVal = SironaTests.test_file_download(ref handle);
-
-            }*/
+            }
             else
             {
                 Console.WriteLine("Unknown first parameter (test-name).\n{0}\n", usageString);

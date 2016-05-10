@@ -9,6 +9,10 @@ namespace SironaDriverApplication
 {
     static class SironaDriverConstants
     {
+        public static uint BULK_FIRST_CHUNK = 0x00000000;
+        public static uint BULK_LAST_CHUNK = 0xFFFFFFFF;
+        public static ushort EVENT_NUMBER_THAT_REFERENCES_HOLTER = 0xFFFF;
+
         public enum DriverDeviceCode
         {
             UNKNOWN,

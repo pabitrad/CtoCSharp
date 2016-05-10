@@ -15,12 +15,11 @@ namespace SironaDriverApplication
     {
         public static int test_parameter_write(ref SironaHandle handle)
         {
-            int retVal = (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR;
             string Name = "PRE_TRIGGER";
             var Value = new SironaValue();
             Value.SetValueAsUInt16(30);
 
-            retVal = SironaDriver.parameter_write(ref handle, Name, ref Value);
+            int retVal = SironaDriver.parameter_write(ref handle, Name, ref Value);
             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
             {
                 Console.Write("Error writing parameter to the device configuration.\n");
@@ -34,11 +33,10 @@ namespace SironaDriverApplication
 
         public static int test_parameter_read(ref SironaHandle handle)
         {
-            int retVal = (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR;
             string Name = "FW_REV";
             var Value = new SironaValue();
 
-            retVal = SironaDriver.parameter_read(ref handle, Name, ref Value);
+            int retVal = SironaDriver.parameter_read(ref handle, Name, ref Value);
             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
             {
                 Console.Write("Error reading parameter from the device configuration.\n");
@@ -54,9 +52,8 @@ namespace SironaDriverApplication
 
         public static int test_parameter_read_all(ref SironaHandle handle)
         {
-            int retVal = (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR;
             uint NumParameters = 0;
-            retVal = SironaDriver.get_number_of_parameters(ref handle, ref NumParameters);
+            int retVal = SironaDriver.get_number_of_parameters(ref handle, ref NumParameters);
             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
             {
                 Console.Write("Error getting total number of configuration parameters from the device.\n");
@@ -85,7 +82,7 @@ namespace SironaDriverApplication
                     uint j = 0;
                     for (j = 0; j < Bytes.Length; j++)
                     {
-                        Console.Write("0x{1} ", Bytes[j]);
+                        Console.Write("0x{0} ", Bytes[j]);
                     }
                     Console.Write("\n");
                 }
@@ -97,13 +94,11 @@ namespace SironaDriverApplication
 
         public static int test_parameter_commit(ref SironaHandle handle)
         {
-            int retVal = (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR;
-
-            retVal = SironaDriver.parameter_commit(ref handle);
+            int retVal = SironaDriver.parameter_commit(ref handle);
             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
             {
                 Console.Write("Error storing configuration parameters to the device.\n");
-                Console.Write("ERROR: %s\n", SironaDriver.error_get_string(retVal));
+                Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
                 return retVal;
             }
 
@@ -113,37 +108,35 @@ namespace SironaDriverApplication
 
         public static int test_event_get_count(ref SironaHandle handle)
         {
-            int retVal = (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR;
             uint eventCount = 0;
-            retVal = SironaDriver.event_get_count(ref handle, ref eventCount);
+            int retVal = SironaDriver.event_get_count(ref handle, ref eventCount);
             
             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
             {
                 Console.Write("Error getting the number of recorded events from the device.\n");
-                Console.Write("ERROR: %s\n", SironaDriver.error_get_string(retVal));
+                Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
                 return retVal;
             }
 
             Console.Write("Getting the number of recorded events from the device finished with success.\n");
-            Console.Write("There are %d recorded events on the device.\n", eventCount);
+            Console.Write("There are {0} recorded events on the device.\n", eventCount);
             return retVal;
         }
 
         public static int test_event_get_header_item(ref SironaHandle handle)
         {
-            int retVal = (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR;
             uint eventCount = 0;
-            retVal = SironaDriver.event_get_count(ref handle, ref eventCount);
+            int retVal = SironaDriver.event_get_count(ref handle, ref eventCount);
             
             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
             {
                 Console.Write("Error getting the number of recorded events from the device.\n");
-                Console.Write("ERROR: %s\n", SironaDriver.error_get_string(retVal));
+                Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
                 return retVal;
             }
 
             Console.Write("Getting the number of recorded events from the device finished with success.\n");
-            Console.Write("There are %d recorded events on the device.\n", eventCount);
+            Console.Write("There are {0} recorded events on the device.\n", eventCount);
 
             if (eventCount <= 0)
             {
@@ -159,30 +152,29 @@ namespace SironaDriverApplication
             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
             {
                 Console.Write("Error getting header item from the device's event with index 0.\n");
-                Console.Write("ERROR: %s\n", SironaDriver.error_get_string(retVal));
+                Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
                 return retVal;
             }
 
             Console.Write("Getting header item from the device's event with index 0 finished with success.\n");
-            Console.Write("The Header item %s value is %d.\n", item, value);
+            Console.Write("The Header item {0} value is {1}.\n", item, value);
             return retVal;
         }
 
-        /*public static int test_event_download(ref SironaHandle handle)
+        public static int test_event_download(ref SironaHandle handle)
         {
-            int retVal = (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR;
-            ValueType Out = 0;
-            retVal = (int)event_get_count(ref handle, ref Out);
-            uint eventCount = (uint)Out;
+            uint eventCount = 0;
+            int retVal = SironaDriver.event_get_count(ref handle, ref eventCount);
+
             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
             {
                 Console.Write("Error getting the number of recorded events from the device.\n");
-                Console.Write("ERROR: %s\n", error_get_string(retVal));
+                Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
                 return retVal;
             }
 
             Console.Write("Getting the number of recorded events from the device finished with success.\n");
-            Console.Write("There are %d recorded events on the device.\n", eventCount);
+            Console.Write("There are {0} recorded events on the device.\n", eventCount);
 
             if (eventCount <= 0)
             {
@@ -191,49 +183,49 @@ namespace SironaDriverApplication
             }
             string item = "EV_SIZE";
             var eventSize = new SironaValue();
-            ValueType chunkSize = 0;
+            uint chunkSize = 0;
 
-            retVal = (int)event_get_header_item(ref handle, 0, item, ref eventSize);
+            retVal = SironaDriver.event_get_header_item(ref handle, 0, item, ref eventSize);
             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
             {
                 Console.Write("Error getting header item from the device's event with index 0.\n");
-                Console.Write("ERROR: %s\n", error_get_string(retVal));
+                Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
                 return retVal;
             }
 
             Console.Write("Getting Event size for event with index 0 finished with success.\n");
-            Console.Write("The Event 0 size is %d.\n", eventSize);
+            Console.Write("The Event 0 size is {0}.\n", eventSize);
 
-            if ((uint)eventSize.GetValueAsUInt32() <= 0)
+            if (eventSize.GetValueAsUInt32() <= 0)
             {
                 Console.Write("There events size is zero, so the event cannot be downloaded.\n");
                 return retVal;
             }
 
-            retVal = (int)bulk_get_chunk_size(ref handle, ref chunkSize);
+            retVal = SironaDriver.bulk_get_chunk_size(ref handle, ref chunkSize);
             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
             {
                 Console.Write("Error getting bulk chunk size.\n");
-                Console.Write("ERROR: %s\n", error_get_string(retVal));
+                Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
                 return retVal;
             }
 
             Console.Write("Getting bulk chunk size from the device finished with success.\n");
-            Console.Write("The bulk chunk size is %d bytes.\n", chunkSize);
+            Console.Write("The bulk chunk size is {0} bytes.\n", chunkSize);
 
-            if ((uint)chunkSize <= 0)
+            if (chunkSize <= 0)
             {
                 Console.Write("There bulk chunk size returned by the device is zero, so the event cannot be downloaded.\n");
                 return retVal;
             }
 
-            uint totalEventChunks = (uint)eventSize.GetValueAsUInt32() / (uint)chunkSize;
-            if (((uint)eventSize.GetValueAsUInt32() % (uint)chunkSize) > 0)
+            uint totalEventChunks = eventSize.GetValueAsUInt32() / chunkSize;
+            if ((eventSize.GetValueAsUInt32() % chunkSize) > 0)
             {
                 totalEventChunks++;
             }
-            uint eventChunkSize = 0;
-            byte[] eventData = new byte[(uint)chunkSize];
+            var eventData = new SironaValue();
+            eventData.Allocate(chunkSize);
 
             var eventFile = File.Open("eventfile.dat", FileMode.Create);
             if (eventFile == null)
@@ -242,7 +234,7 @@ namespace SironaDriverApplication
                 return -1;
             }
 
-            retVal = event_start_transfer(handle, 0, BULK_FIRST_CHUNK, BULK_LAST_CHUNK);
+            retVal = SironaDriver.event_start_transfer(ref handle, 0, SironaDriverConstants.BULK_FIRST_CHUNK, SironaDriverConstants.BULK_LAST_CHUNK);
             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
             {
                 Console.Write("Failed to start event data bulk transfer.\n");
@@ -252,23 +244,22 @@ namespace SironaDriverApplication
 
             Console.Write("Start event data bulk transfer with success.\n");
 
-            uint chunkSequenceNumber = BULK_LAST_CHUNK;
-            uint receivedChunkSequenceNumber = BULK_FIRST_CHUNK;
+            uint chunkSequenceNumber = SironaDriverConstants.BULK_LAST_CHUNK;
+            uint receivedChunkSequenceNumber = SironaDriverConstants.BULK_FIRST_CHUNK;
             bool lastChunkReadWithSuccess = false;
             do
             {
 
-                retVal = bulk_read_data(handle, &receivedChunkSequenceNumber, &eventChunkSize, eventData);
+                retVal = SironaDriver.bulk_read_data(ref handle, ref receivedChunkSequenceNumber, ref eventData);
                 if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
                 {
-                    Console.Write("Error downloading the event data chunk %d from %d.\n", chunkSequenceNumber + 1, totalEventChunks);
-                    Console.Write("ERROR: %s\n", error_get_string(retVal));
-                    fclose(eventFile);
-                    free(eventData);
+                    Console.Write("Error downloading the event data chunk {0} from {1}.\n", chunkSequenceNumber + 1, totalEventChunks);
+                    Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
+                    eventFile.Close();
                     return retVal;
                 }
 
-                if (receivedChunkSequenceNumber == BULK_LAST_CHUNK)
+                if (receivedChunkSequenceNumber == SironaDriverConstants.BULK_LAST_CHUNK)
                 {
                     lastChunkReadWithSuccess = true;
                 }
@@ -279,25 +270,23 @@ namespace SironaDriverApplication
                     {
 
                         Console.Write("Wrong Event bulk data chunk sequence number received.\n");
-                        Console.Write("Expected chunk sequence number: %d Received chunk sequence number: %d.\n", chunkSequenceNumber + 1, receivedChunkSequenceNumber);
+                        Console.Write("Expected chunk sequence number: {0} Received chunk sequence number: {1}.\n", chunkSequenceNumber + 1, receivedChunkSequenceNumber);
 
-                        retVal = event_stop_transfer(handle);
+                        retVal = SironaDriver.event_stop_transfer(ref handle);
                         if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
                         {
                             Console.Write("Error stopping the Event data bulk transfer.\n");
-                            Console.Write("ERROR: %s\n", error_get_string(retVal));
-                            fclose(eventFile);
-                            free(eventData);
+                            Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
+                            eventFile.Close();
                             return retVal;
                         }
 
-                        retVal = event_start_transfer(handle, 0, chunkSequenceNumber, BULK_LAST_CHUNK);
+                        retVal = SironaDriver.event_start_transfer(ref handle, 0, chunkSequenceNumber, SironaDriverConstants.BULK_LAST_CHUNK);
                         if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
                         {
                             Console.Write("Error starting the Event data bulk transfer.\n");
-                            Console.Write("ERROR: %s\n", error_get_string(retVal));
-                            fclose(eventFile);
-                            free(eventData);
+                            Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
+                            eventFile.Close();
                             return retVal;
                         }
 
@@ -307,118 +296,102 @@ namespace SironaDriverApplication
 
                 chunkSequenceNumber++;
 
-                Console.Write("The event data chunk %d from %d was downloaded with success.\n", chunkSequenceNumber, totalEventChunks);
-                size_t j = 0;
-                for (j = 0; j < eventChunkSize; j++)
+                byte[] AsArray = eventData.GetValueAsByteArray();
+                Console.Write("The event data chunk {0} from {1} was downloaded with success.\n", chunkSequenceNumber, totalEventChunks);
+                foreach (var j in AsArray)
                 {
-                    fConsole.Write(eventFile, "%c", *(eventData + j));
+                    eventFile.WriteByte(j);
                 }
-                fflush(eventFile);
+                eventFile.Flush();
 
             } while (!lastChunkReadWithSuccess);
 
-            fclose(eventFile);
-            free(eventData);
+            eventFile.Close();
 
             uint annotSize = 0;
-
-            retVal = annotation_get_size(handle, 0, &annotSize);
+            retVal = SironaDriver.annotation_get_size(ref handle, 0, ref annotSize);
             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
             {
                 Console.Write("Error getting size of the annotation data for the recorded event.\n");
-                Console.Write("ERROR: %s\n", error_get_string(retVal));
+                Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
                 return retVal;
             }
 
             Console.Write("Getting annotation size for event with index 0 finished with success.\n");
-            Console.Write("The annotation size for event with index 0 is %d.\n", annotSize);
+            Console.Write("The annotation size for event with index 0 is {0}.\n", annotSize);
 
             if (annotSize <= 0)
             {
                 Console.Write("There is no annotation data for the recorded event.\n");
-
             }
             else
             {
-
                 uint totalAnnotChunks = annotSize / chunkSize;
                 if ((annotSize % chunkSize) != 0)
                 {
                     totalAnnotChunks++;
                 }
-                uint annotChunkSize = 0;
-                char* annotData = (char*)malloc(chunkSize);
+                var annotData = new SironaValue();
+                annotData.Allocate(chunkSize);
 
-                FILE* annotFile;
-                annotFile = fopen("eventfile.atr", "wb");
-                if (annotFile == NULL)
-                { //if file does not exist, create it
-                    annotFile = fopen("eventfile.atr", "wb");
-                    if (annotFile == NULL)
-                    {
-                        Console.Write("Failed to open eventfile.atr");
-                        free(annotData);
-                        return -1;
-                    }
+                var annotFile = File.Open("eventfile.atr", FileMode.Create);
+                if (annotFile == null)
+                {
+                    Console.Write("Failed to open eventfile.atr");
+                    return -1;
                 }
 
-                retVal = annotation_start_transfer(handle, 0, BULK_FIRST_CHUNK, BULK_LAST_CHUNK);
+                retVal = SironaDriver.annotation_start_transfer(ref handle, 0, SironaDriverConstants.BULK_FIRST_CHUNK, SironaDriverConstants.BULK_LAST_CHUNK);
                 if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
                 {
                     Console.Write("Failed to start annotation data bulk transfer.\n");
-                    fclose(annotFile);
-                    free(annotData);
+                    annotFile.Close();
                     return retVal;
                 }
 
                 Console.Write("Start annotation data bulk transfer with success.\n");
 
-                chunkSequenceNumber = BULK_LAST_CHUNK;
-                receivedChunkSequenceNumber = BULK_FIRST_CHUNK;
+                chunkSequenceNumber = SironaDriverConstants.BULK_LAST_CHUNK;
+                receivedChunkSequenceNumber = SironaDriverConstants.BULK_FIRST_CHUNK;
                 lastChunkReadWithSuccess = false;
                 do
                 {
 
-                    retVal = bulk_read_data(handle, &receivedChunkSequenceNumber, &annotChunkSize, annotData);
+                    retVal = SironaDriver.bulk_read_data(ref handle, ref receivedChunkSequenceNumber, ref annotData);
                     if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
                     {
-                        Console.Write("Error downloading the annotation data chunk %d from %d.\n", chunkSequenceNumber + 1, totalAnnotChunks);
-                        Console.Write("ERROR: %s\n", error_get_string(retVal));
-                        fclose(annotFile);
-                        free(annotData);
+                        Console.Write("Error downloading the annotation data chunk {0} from {1}.\n", chunkSequenceNumber + 1, totalAnnotChunks);
+                        Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
+                        annotFile.Close();
                         return retVal;
                     }
 
-                    if (receivedChunkSequenceNumber == BULK_LAST_CHUNK)
+                    if (receivedChunkSequenceNumber == SironaDriverConstants.BULK_LAST_CHUNK)
                     {
                         lastChunkReadWithSuccess = true;
                     }
                     else
                     {
-
                         if (receivedChunkSequenceNumber != chunkSequenceNumber + 1)
                         {
-
                             Console.Write("Wrong Annotation bulk data chunk sequence number received.\n");
-                            Console.Write("Expected chunk sequence number: %d Received chunk sequence number: %d.\n", chunkSequenceNumber + 1, receivedChunkSequenceNumber);
+                            Console.Write("Expected chunk sequence number: {0} Received chunk sequence number: {1}.\n", chunkSequenceNumber + 1, receivedChunkSequenceNumber);
 
-                            retVal = annotation_stop_transfer(handle);
+                            retVal = SironaDriver.annotation_stop_transfer(ref handle);
                             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
                             {
                                 Console.Write("Error stopping the Annotation data bulk transfer.\n");
-                                Console.Write("ERROR: %s\n", error_get_string(retVal));
-                                fclose(annotFile);
-                                free(annotData);
+                                Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
+                                annotFile.Close();
                                 return retVal;
                             }
 
-                            retVal = annotation_start_transfer(handle, 0, chunkSequenceNumber, BULK_LAST_CHUNK);
+                            retVal = SironaDriver.annotation_start_transfer(ref handle, 0, chunkSequenceNumber, SironaDriverConstants.BULK_LAST_CHUNK);
                             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
                             {
                                 Console.Write("Error starting the Annotation data bulk transfer.\n");
-                                Console.Write("ERROR: %s\n", error_get_string(retVal));
-                                fclose(annotFile);
-                                free(annotData);
+                                Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
+                                annotFile.Close();
                                 return retVal;
                             }
 
@@ -428,21 +401,20 @@ namespace SironaDriverApplication
 
                     chunkSequenceNumber++;
 
-                    Console.Write("The annotation data chunk %d from %d was downloaded with success.\n", chunkSequenceNumber, totalAnnotChunks);
-                    size_t j = 0;
-                    for (j = 0; j < annotChunkSize; j++)
+                    Console.Write("The annotation data chunk {0} from {1} was downloaded with success.\n", chunkSequenceNumber, totalAnnotChunks);
+                    byte[] AsArray = annotData.GetValueAsByteArray();
+                    foreach (var j in AsArray)
                     {
-                        fConsole.Write(annotFile, "%c", *(annotData + j));
+                        annotFile.WriteByte(j);
                     }
-                    fflush(annotFile);
+                    annotFile.Flush();
 
                 } while (!lastChunkReadWithSuccess);
 
-                fclose(annotFile);
-                free(annotData);
+                annotFile.Close();
             }
 
-            retVal = event_mark_sent(handle, 0);
+            retVal = SironaDriver.event_mark_sent(ref handle, 0);
             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
             {
                 Console.Write("Failed to mark downloaded Event as sent.\n");
@@ -456,13 +428,11 @@ namespace SironaDriverApplication
 
         public static int test_event_erase_all(ref SironaHandle handle)
         {
-            int retVal = (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR;
-
-            retVal = event_erase_all(handle);
+            int retVal = SironaDriver.event_erase_all(ref handle);
             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
             {
                 Console.Write("Error erasing all recorded events on the device.\n");
-                Console.Write("ERROR: %s\n", error_get_string(retVal));
+                Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
                 return retVal;
             }
 
@@ -472,13 +442,11 @@ namespace SironaDriverApplication
 
         public static int test_event_record(ref SironaHandle handle)
         {
-            int retVal = (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR;
-
-            retVal = event_record(handle);
+            int retVal = SironaDriver.event_record(ref handle);
             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
             {
                 Console.Write("Error recording an event on the device.\n");
-                Console.Write("ERROR: %s\n", error_get_string(retVal));
+                Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
                 return retVal;
             }
 
@@ -488,19 +456,17 @@ namespace SironaDriverApplication
 
         public static int test_holter_download(ref SironaHandle handle)
         {
-            int retVal = (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR;
             uint holterSizeInBytes = 0;
-
-            retVal = holter_get_size(handle, &holterSizeInBytes);
+            int retVal = SironaDriver.holter_get_size(ref handle, ref holterSizeInBytes);
             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
             {
                 Console.Write("Error getting the Holter data size from the device.\n");
-                Console.Write("ERROR: %s\n", error_get_string(retVal));
+                Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
                 return retVal;
             }
 
             Console.Write("Getting the Holter data size from the device finished with success.\n");
-            Console.Write("There are %d bytes of Holter data on the device.\n", holterSizeInBytes);
+            Console.Write("There are {0} bytes of Holter data on the device.\n", holterSizeInBytes);
 
             if (holterSizeInBytes <= 0)
             {
@@ -510,16 +476,16 @@ namespace SironaDriverApplication
 
             uint chunkSize = 0;
 
-            retVal = bulk_get_chunk_size(handle, &chunkSize);
+            retVal = SironaDriver.bulk_get_chunk_size(ref handle, ref chunkSize);
             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
             {
                 Console.Write("Error getting bulk chunk size from the device.\n");
-                Console.Write("ERROR: %s\n", error_get_string(retVal));
+                Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
                 return retVal;
             }
 
             Console.Write("Getting bulk chunk size from the device finished with success.\n");
-            Console.Write("The bulk chunk size is %d bytes.\n", chunkSize);
+            Console.Write("The bulk chunk size is {0} bytes.\n", chunkSize);
 
             if (chunkSize <= 0)
             {
@@ -533,50 +499,41 @@ namespace SironaDriverApplication
                 totalHolterChunks++;
             }
 
-            uint holterDataSize = 0;
-            char* holterData = (char*)malloc(chunkSize);
+            var holterData = new SironaValue();
+            holterData.Allocate(chunkSize);
 
-            FILE* holterFile;
-            holterFile = fopen("holterfile.dat", "wb");
-            if (holterFile == NULL)
-            { //if file does not exist, create it
-                holterFile = fopen("holterfile.dat", "wb");
-                if (holterFile == NULL)
-                {
-                    Console.Write("Failed to open an holterfile.");
-                    free(holterData);
-                    return -1;
-                }
+            var holterFile = File.Open("holterfile.dat", FileMode.Create);
+            if (holterFile == null)
+            {
+                Console.Write("Failed to open an holterfile.");
+                return -1;
             }
 
-            retVal = holter_start_transfer(handle, BULK_FIRST_CHUNK, BULK_LAST_CHUNK);
+            retVal = SironaDriver.holter_start_transfer(ref handle, SironaDriverConstants.BULK_FIRST_CHUNK, SironaDriverConstants.BULK_LAST_CHUNK);
             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
             {
                 Console.Write("Failed to start holter data bulk transfer.\n");
-                fclose(holterFile);
-                free(holterData);
+                holterFile.Close();
                 return retVal;
             }
 
             Console.Write("Start holter data bulk transfer with success.\n");
 
-            uint chunkSequenceNumber = BULK_LAST_CHUNK;
-            uint receivedChunkSequenceNumber = BULK_FIRST_CHUNK;
+            uint chunkSequenceNumber = SironaDriverConstants.BULK_LAST_CHUNK;
+            uint receivedChunkSequenceNumber = SironaDriverConstants.BULK_FIRST_CHUNK;
             bool lastChunkReadWithSuccess = false;
             do
             {
-
-                retVal = bulk_read_data(handle, &receivedChunkSequenceNumber, &holterDataSize, holterData);
+                retVal = SironaDriver.bulk_read_data(ref handle, ref receivedChunkSequenceNumber, ref holterData);
                 if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
                 {
-                    Console.Write("Error downloading the Holter data chunk %d from %d.\n", chunkSequenceNumber + 1, totalHolterChunks);
-                    Console.Write("ERROR: %s\n", error_get_string(retVal));
-                    fclose(holterFile);
-                    free(holterData);
+                    Console.Write("Error downloading the Holter data chunk {0} from {1}.\n", chunkSequenceNumber + 1, totalHolterChunks);
+                    Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
+                    holterFile.Close();
                     return retVal;
                 }
 
-                if (receivedChunkSequenceNumber == BULK_LAST_CHUNK)
+                if (receivedChunkSequenceNumber == SironaDriverConstants.BULK_LAST_CHUNK)
                 {
                     lastChunkReadWithSuccess = true;
                 }
@@ -587,25 +544,23 @@ namespace SironaDriverApplication
                     {
 
                         Console.Write("Wrong Holter bulk data chunk sequence number received.\n");
-                        Console.Write("Expected chunk sequence number: %d Received chunk sequence number: %d.\n", chunkSequenceNumber + 1, receivedChunkSequenceNumber);
+                        Console.Write("Expected chunk sequence number: {0} Received chunk sequence number: {1}.\n", chunkSequenceNumber + 1, receivedChunkSequenceNumber);
 
-                        retVal = holter_stop_transfer(handle);
+                        retVal = SironaDriver.holter_stop_transfer(ref handle);
                         if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
                         {
                             Console.Write("Error stopping the Holter data bulk transfer.\n");
-                            Console.Write("ERROR: %s\n", error_get_string(retVal));
-                            fclose(holterFile);
-                            free(holterData);
+                            Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
+                            holterFile.Close();
                             return retVal;
                         }
 
-                        retVal = holter_start_transfer(handle, chunkSequenceNumber, BULK_LAST_CHUNK);
+                        retVal = SironaDriver.holter_start_transfer(ref handle, chunkSequenceNumber, SironaDriverConstants.BULK_LAST_CHUNK);
                         if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
                         {
                             Console.Write("Error starting the Holter data bulk transfer.\n");
-                            Console.Write("ERROR: %s\n", error_get_string(retVal));
-                            fclose(holterFile);
-                            free(holterData);
+                            Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
+                            holterFile.Close();
                             return retVal;
                         }
 
@@ -615,31 +570,30 @@ namespace SironaDriverApplication
 
                 chunkSequenceNumber++;
 
-                Console.Write("The Holter data chunk %d from %d was downloaded with success.\n", chunkSequenceNumber, totalHolterChunks);
-                size_t j = 0;
-                for (j = 0; j < holterDataSize; j++)
+                Console.Write("The Holter data chunk {0} from {1} was downloaded with success.\n", chunkSequenceNumber, totalHolterChunks);
+                byte[] AsArray = holterData.GetValueAsByteArray();
+                foreach (var j in AsArray)
                 {
-                    fConsole.Write(holterFile, "%c", *(holterData + j));
+                    holterFile.WriteByte(j);
                 }
-                fflush(holterFile);
+                holterFile.Flush();
 
             } while (!lastChunkReadWithSuccess);
 
-            fclose(holterFile);
-            free(holterData);
+            holterFile.Close();
 
             uint annotSize = 0;
 
-            retVal = annotation_get_size(handle, EVENT_NUMBER_THAT_REFERENCES_HOLTER, &annotSize);
+            retVal = SironaDriver.annotation_get_size(ref handle, SironaDriverConstants.EVENT_NUMBER_THAT_REFERENCES_HOLTER, ref annotSize);
             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
             {
                 Console.Write("Error getting size of the annotation data for the holter data.\n");
-                Console.Write("ERROR: %s\n", error_get_string(retVal));
+                Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
                 return retVal;
             }
 
             Console.Write("Getting annotation size for the holter data finished with success.\n");
-            Console.Write("The annotation size for the holter data is %d.\n", annotSize);
+            Console.Write("The annotation size for the holter data is {0}.\n", annotSize);
 
             if (annotSize <= 0)
             {
@@ -654,50 +608,43 @@ namespace SironaDriverApplication
                 {
                     totalAnnotChunks++;
                 }
-                uint annotChunkSize = 0;
-                char* annotData = (char*)malloc(chunkSize);
+                var annotData = new SironaValue();
+                annotData.Allocate(chunkSize);
 
-                FILE* annotFile;
-                annotFile = fopen("holterfile.atr", "wb");
-                if (annotFile == NULL)
-                { //if file does not exist, create it
-                    annotFile = fopen("holterfile.atr", "wb");
-                    if (annotFile == NULL)
-                    {
-                        Console.Write("Failed to open holterfile.atr");
-                        free(annotData);
-                        return -1;
-                    }
+                var annotFile = File.Open("holterfile.atr", FileMode.Create);
+
+                if (annotFile == null)
+                {
+                    Console.Write("Failed to open holterfile.atr");
+                    return -1;
                 }
 
-                retVal = annotation_start_transfer(handle, EVENT_NUMBER_THAT_REFERENCES_HOLTER, BULK_FIRST_CHUNK, BULK_LAST_CHUNK);
+                retVal = SironaDriver.annotation_start_transfer(ref handle, SironaDriverConstants.EVENT_NUMBER_THAT_REFERENCES_HOLTER, SironaDriverConstants.BULK_FIRST_CHUNK, SironaDriverConstants.BULK_LAST_CHUNK);
                 if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
                 {
                     Console.Write("Failed to start annotation data bulk transfer.\n");
-                    fclose(annotFile);
-                    free(annotData);
+                    annotFile.Close();
                     return retVal;
                 }
 
                 Console.Write("Start annotation data bulk transfer with success.\n");
 
-                chunkSequenceNumber = BULK_LAST_CHUNK;
-                receivedChunkSequenceNumber = BULK_LAST_CHUNK;
+                chunkSequenceNumber = SironaDriverConstants.BULK_LAST_CHUNK;
+                receivedChunkSequenceNumber = SironaDriverConstants.BULK_LAST_CHUNK;
                 lastChunkReadWithSuccess = false;
                 do
                 {
 
-                    retVal = bulk_read_data(handle, &receivedChunkSequenceNumber, &annotChunkSize, annotData);
+                    retVal = SironaDriver.bulk_read_data(ref handle, ref receivedChunkSequenceNumber, ref annotData);
                     if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
                     {
-                        Console.Write("Error downloading the annotation data chunk %d from %d.\n", chunkSequenceNumber + 1, totalAnnotChunks);
-                        Console.Write("ERROR: %s\n", error_get_string(retVal));
-                        fclose(annotFile);
-                        free(annotData);
+                        Console.Write("Error downloading the annotation data chunk {0} from {1}.\n", chunkSequenceNumber + 1, totalAnnotChunks);
+                        Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
+                        annotFile.Close();
                         return retVal;
                     }
 
-                    if (receivedChunkSequenceNumber == BULK_LAST_CHUNK)
+                    if (receivedChunkSequenceNumber == SironaDriverConstants.BULK_LAST_CHUNK)
                     {
                         lastChunkReadWithSuccess = true;
                     }
@@ -708,25 +655,23 @@ namespace SironaDriverApplication
                         {
 
                             Console.Write("Wrong Annotation bulk data chunk sequence number received.\n");
-                            Console.Write("Expected chunk sequence number: %d Received chunk sequence number: %d.\n", chunkSequenceNumber + 1, receivedChunkSequenceNumber);
+                            Console.Write("Expected chunk sequence number: {0} Received chunk sequence number: {1}.\n", chunkSequenceNumber + 1, receivedChunkSequenceNumber);
 
-                            retVal = event_stop_transfer(handle);
+                            retVal = SironaDriver.event_stop_transfer(ref handle);
                             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
                             {
                                 Console.Write("Error stopping the Annotation data bulk transfer.\n");
-                                Console.Write("ERROR: %s\n", error_get_string(retVal));
-                                fclose(annotFile);
-                                free(annotData);
+                                Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
+                                annotFile.Close();
                                 return retVal;
                             }
 
-                            retVal = event_start_transfer(handle, 0, chunkSequenceNumber, BULK_LAST_CHUNK);
+                            retVal = SironaDriver.event_start_transfer(ref handle, 0, chunkSequenceNumber, SironaDriverConstants.BULK_LAST_CHUNK);
                             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
                             {
                                 Console.Write("Error starting the Annotation data bulk transfer.\n");
-                                Console.Write("ERROR: %s\n", error_get_string(retVal));
-                                fclose(annotFile);
-                                free(annotData);
+                                Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
+                                annotFile.Close();
                                 return retVal;
                             }
 
@@ -736,18 +681,17 @@ namespace SironaDriverApplication
 
                     chunkSequenceNumber++;
 
-                    Console.Write("The annotation data chunk %d from %d was downloaded with success.\n", chunkSequenceNumber, totalAnnotChunks);
-                    size_t j = 0;
-                    for (j = 0; j < annotChunkSize; j++)
+                    Console.Write("The annotation data chunk {0} from {1} was downloaded with success.\n", chunkSequenceNumber, totalAnnotChunks);
+                    byte[] AsArray = annotData.GetValueAsByteArray();
+                    foreach (var j in AsArray)
                     {
-                        fConsole.Write(annotFile, "%c", *(annotData + j));
+                        annotFile.WriteByte(j);
                     }
-                    fflush(annotFile);
+                    annotFile.Flush();
 
                 } while (!lastChunkReadWithSuccess);
 
-                fclose(annotFile);
-                free(annotData);
+                annotFile.Close();
             }
 
             Console.Write("Downloading Holter data and annotations has finished with success.\n");
@@ -756,13 +700,11 @@ namespace SironaDriverApplication
 
         public static int test_holter_erase(ref SironaHandle handle)
         {
-            int retVal = (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR;
-
-            retVal = holter_erase(handle);
+            int retVal = SironaDriver.holter_erase(ref handle);
             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
             {
                 Console.Write("Error erasing the Holter data on the device.\n");
-                Console.Write("ERROR: %s\n", error_get_string(retVal));
+                Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
                 return retVal;
             }
 
@@ -772,61 +714,55 @@ namespace SironaDriverApplication
 
         public static int test_firmware_upload(ref SironaHandle handle)
         {
-            int retVal = (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR;
-
-            FILE* fw_file;
-            fw_file = fopen("sirona_firmware.bin", "rb");
-            if (fw_file == NULL)
+            var fw_file = File.OpenRead("sirona_firmware.bin");
+            if (fw_file == null)
             {
                 Console.Write("Failed to open an firmware file.");
                 return -1;
             }
 
-            fseek(fw_file, 0, SEEK_END); // seek to end of file
-            size_t fwSize = ftell(fw_file); // get current file pointer
-            fseek(fw_file, 0, SEEK_SET); // seek back to beginning of file
+            int fwSize = (int)(new FileInfo("sirona_firmware.bin")).Length;
 
             uint chunkSize = 0;
-            uint lastChunkSize = 0;
-            uint totalFwChunks = 0;
-            char* fwChunk = NULL;
+            int lastChunkSize = 0;
+            int totalFwChunks = 0;
+            var fwChunk = new SironaValue();
 
-            retVal = bulk_get_chunk_size(handle, &chunkSize);
+            int retVal = SironaDriver.bulk_get_chunk_size(ref handle, ref chunkSize);
             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
             {
                 Console.Write("Getting bulk chunk size from the device failed.\n");
-                Console.Write("ERROR: %s\n", error_get_string(retVal));
-                fclose(fw_file);
+                Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
+                fw_file.Close();
                 return retVal;
             }
 
             Console.Write("Getting bulk chunk size from the device finished with success.\n");
-            Console.Write("The bulk chunk size is %d bytes.\n", chunkSize);
+            Console.Write("The bulk chunk size is {0} bytes.\n", chunkSize);
 
             if (chunkSize <= 0)
             {
                 Console.Write("Invalid chunk size retrieved from the device.\nThe firmware upload test cannot proceed!\n");
 
-                fclose(fw_file);
+                fw_file.Close();
                 return retVal;
             }
 
-            totalFwChunks = fwSize / chunkSize;
-            lastChunkSize = fwSize % chunkSize;
+            totalFwChunks = fwSize / (int)chunkSize;
+            lastChunkSize = fwSize % (int)chunkSize;
             if (lastChunkSize != 0)
             {
                 totalFwChunks++;
             }
 
-            fwChunk = (char*)malloc(chunkSize);
+            fwChunk.Allocate((uint)chunkSize);
 
-            retVal = firmware_upload_start(handle, fwSize);
+            retVal = SironaDriver.firmware_upload_start(ref handle, (uint)fwSize);
             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
             {
                 Console.Write("The Firmware upload starting failed.\n");
-                Console.Write("ERROR: %s\n", error_get_string(retVal));
-                fclose(fw_file);
-                free(fwChunk);
+                Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
+                fw_file.Close();
                 return retVal;
             }
 
@@ -836,28 +772,29 @@ namespace SironaDriverApplication
             for (i = 0; i < totalFwChunks; i++)
             {
 
-                uint bytesRead = 0;
-                uint bytesToRead = chunkSize;
+                int bytesRead = 0;
+                int bytesToRead = (int)chunkSize;
 
                 if (i == (totalFwChunks - 1))
                 {
                     bytesToRead = lastChunkSize;
                 }
-                bytesRead = fread(fwChunk, 1, bytesToRead, fw_file);
+                byte[] Chunk = new byte[bytesToRead];
+                bytesRead = fw_file.Read(Chunk, 0, bytesToRead);
+                fwChunk.SetValueAsByteArray(Chunk);
 
                 if (bytesRead == bytesToRead)
                 {
-
-                    retVal = firmware_upload_chunk(handle, i, bytesRead, fwChunk);
+                    retVal = SironaDriver.firmware_upload_chunk(ref handle, i, ref fwChunk);
                     if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
                     {
-                        Console.Write("Error uploading the firmware chunk %d from %d.\n", i + 1, totalFwChunks);
-                        Console.Write("ERROR: %s\n", error_get_string(retVal));
+                        Console.Write("Error uploading the firmware chunk {0} from {1}.\n", i + 1, totalFwChunks);
+                        Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
                         break;
                     }
                     else
                     {
-                        Console.Write("The firmware data chunk %d from %d was uploaded with success.\n", i + 1, totalFwChunks);
+                        Console.Write("The firmware data chunk {0} from {1} was uploaded with success.\n", i + 1, totalFwChunks);
                     }
 
                 }
@@ -869,56 +806,49 @@ namespace SironaDriverApplication
 
             } // for
 
-            fclose(fw_file);
+            fw_file.Close();
 
             // if all commands in the for loop were executed with success
             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
             {
-                free(fwChunk);
                 return retVal;
             }
 
-            retVal = firmware_apply(handle);
+            retVal = SironaDriver.firmware_apply(ref handle);
             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
             {
                 Console.Write("Error applying the new Firmware to the device.\n");
-                Console.Write("ERROR: %s\n", error_get_string(retVal));
-                free(fwChunk);
+                Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
                 return retVal;
             }
 
-            free(fwChunk);
             Console.Write("Applying the new Firmware to the device finished with success.\n");
             return retVal;
         }
 
         public static int test_status_get_battery_voltage(ref SironaHandle handle)
         {
-            int retVal = (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR;
             uint batteryVoltage = 0;
-
-            retVal = get_battery_voltage(handle, &batteryVoltage);
+            int retVal = SironaDriver.get_battery_voltage(ref handle, ref batteryVoltage);
             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
             {
                 Console.Write("Error getting the device's' battery voltage.\n");
-                Console.Write("ERROR: %s\n", error_get_string(retVal));
+                Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
                 return retVal;
             }
 
             Console.Write("Getting the device's' battery voltage finished with success.\n");
-            Console.Write("The device's' battery voltage is %d[mV].\n", batteryVoltage);
+            Console.Write("The device's' battery voltage is {0}[mV].\n", batteryVoltage);
             return retVal;
         }
 
         public static int test_status_device_ping(ref SironaHandle handle)
         {
-            int retVal = (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR;
-
-            retVal = device_ping(handle);
+            int retVal = SironaDriver.device_ping(ref handle);
             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
             {
                 Console.Write("Error pinging the device.\n");
-                Console.Write("ERROR: %s\n", error_get_string(retVal));
+                Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
                 return retVal;
             }
 
@@ -928,9 +858,7 @@ namespace SironaDriverApplication
 
         public static int test_status_stream_cable_id(ref SironaHandle handle)
         {
-            int retVal = (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR;
-
-            retVal = start_status_stream(handle, SIRONA_STATUS_COMMAND_CABLE_ID);
+            int retVal = SironaDriver.start_status_stream(ref handle, (uint)SironaDriverConstants.StatusCommand.CABLE_ID);
             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
             {
                 Console.Write("Failed to start streaming Cable ID status data.\n");
@@ -939,37 +867,38 @@ namespace SironaDriverApplication
 
             Console.Write("Cable ID status data bulk transfer started with success.\n");
 
-            uint chunkSequenceNumber = BULK_LAST_CHUNK;
-            uint receivedChunkSequenceNumber = BULK_FIRST_CHUNK;
+            uint chunkSequenceNumber = SironaDriverConstants.BULK_LAST_CHUNK;
+            uint receivedChunkSequenceNumber = SironaDriverConstants.BULK_FIRST_CHUNK;
 
             do
             {
-                uint statusStreamDataPacketSize = 0;
-                char statusStreamData[4] = { 0 };
+                var statusStreamData = new SironaValue();
 
-                retVal = bulk_read_data(handle, &receivedChunkSequenceNumber, &statusStreamDataPacketSize, statusStreamData);
+                retVal = SironaDriver.bulk_read_data(ref handle, ref receivedChunkSequenceNumber, ref statusStreamData);
                 if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
                 {
-                    Console.Write("Error downloading Cable ID status data packet %d from 10.\n", chunkSequenceNumber + 1);
-                    Console.Write("ERROR: %s\n", error_get_string(retVal));
+                    Console.Write("Error downloading Cable ID status data packet {0} from 10.\n", chunkSequenceNumber + 1);
+                    Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
                     return retVal;
                 }
 
                 if (receivedChunkSequenceNumber != chunkSequenceNumber + 1)
                 {
                     Console.Write("Wrong chunk sequence number!\n");
-                    Console.Write("Expected sequence number: %d, Receivedsequence number: %d\n", chunkSequenceNumber + 1, receivedChunkSequenceNumber);
-                    return SIRONA_APPLICATION_WRONG_BULK_SEQUENCE_NUMBER;
+                    Console.Write("Expected sequence number: {0}, Receivedsequence number: {1}\n", chunkSequenceNumber + 1, receivedChunkSequenceNumber);
+                    return (int)SironaDriverConstants.ErrorCode.APPLICATION_WRONG_BULK_SEQUENCE_NUMBER;
                 }
 
                 chunkSequenceNumber++;
 
-                Console.Write("The Cable ID status data packet with sequence number %d was downloaded with success.\n", receivedChunkSequenceNumber);
-                Console.Write("The Cable ID Parameter number: 0x%x and the Cable ID value: 0x%x\n", statusStreamData[0], statusStreamData[1]);
+                byte[] StreamData = statusStreamData.GetValueAsByteArray();
+
+                Console.Write("The Cable ID status data packet with sequence number {0} was downloaded with success.\n", receivedChunkSequenceNumber);
+                Console.Write("The Cable ID Parameter number: 0x{0} and the Cable ID value: 0x{1}\n", StreamData[0], StreamData[1]);
 
             } while (chunkSequenceNumber <= 10);
 
-            retVal = stop_status_stream(handle);
+            retVal = SironaDriver.stop_status_stream(ref handle);
             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
             {
                 Console.Write("Failed to stop Cable ID status streaming from the device.\n");
@@ -982,9 +911,7 @@ namespace SironaDriverApplication
 
         public static int test_live_ecg_streaming(ref SironaHandle handle)
         {
-            int retVal = (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR;
-
-            retVal = liveECG_start_streaming(handle);
+            int retVal = SironaDriver.liveECG_start_streaming(ref handle);
             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
             {
                 Console.Write("Failed to start live ECG data bulk transfer.\n");
@@ -993,38 +920,39 @@ namespace SironaDriverApplication
 
             Console.Write("Live ECG data bulk transfer started with success.\n");
 
-            uint chunkSequenceNumber = BULK_LAST_CHUNK;
-            uint receivedChunkSequenceNumber = BULK_FIRST_CHUNK;
-            uint lead_off_status;
+            uint chunkSequenceNumber = SironaDriverConstants.BULK_LAST_CHUNK;
+            uint receivedChunkSequenceNumber = SironaDriverConstants.BULK_FIRST_CHUNK;
+            uint lead_off_status = 0;
 
             do
             {
-                uint liveEcgDataPacketSize = 0;
-                char liveEcgDataPacket[1024] = { 0 };
+                var liveEcgDataPacket = new SironaValue();
 
-                retVal = liveECG_bulk_read_data(handle, &receivedChunkSequenceNumber, &lead_off_status, &liveEcgDataPacketSize, liveEcgDataPacket);
+                retVal = SironaDriver.liveECG_bulk_read_data(ref handle, ref receivedChunkSequenceNumber, ref lead_off_status, ref liveEcgDataPacket);
                 if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
                 {
-                    Console.Write("Error downloading live Ecg data packet %d from 10.\n", chunkSequenceNumber + 1);
-                    Console.Write("ERROR: %s\n", error_get_string(retVal));
+                    Console.Write("Error downloading live Ecg data packet {0} from 10.\n", chunkSequenceNumber + 1);
+                    Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
                     return retVal;
                 }
 
                 if (receivedChunkSequenceNumber != chunkSequenceNumber + 1)
                 {
                     Console.Write("Wrong chunk sequence number!\n");
-                    Console.Write("Expected sequence number: %d, Receivedsequence number: %d\n", chunkSequenceNumber + 1, receivedChunkSequenceNumber);
-                    return SIRONA_APPLICATION_WRONG_BULK_SEQUENCE_NUMBER;
+                    Console.Write("Expected sequence number: {0}, Receivedsequence number: {1}\n", chunkSequenceNumber + 1, receivedChunkSequenceNumber);
+                    return (int)SironaDriverConstants.ErrorCode.APPLICATION_WRONG_BULK_SEQUENCE_NUMBER;
                 }
 
                 chunkSequenceNumber++;
 
+                byte[] AsBytes = liveEcgDataPacket.GetValueAsByteArray();
+
                 Console.Write("The live Ecg data packet with sequence number %d was downloaded with success.\n", receivedChunkSequenceNumber);
-                Console.Write("Live Ecg data packet: 0x%x, 0x%x, 0x%x, 0x%x, 0x%x ...\n", liveEcgDataPacket[0], liveEcgDataPacket[1], liveEcgDataPacket[2], liveEcgDataPacket[3], liveEcgDataPacket[4]);
+                Console.Write("Live Ecg data packet: 0x%x, 0x%x, 0x%x, 0x%x, 0x%x ...\n", AsBytes[0], AsBytes[1], AsBytes[2], AsBytes[3], AsBytes[4]);
 
             } while (chunkSequenceNumber <= 10);
 
-            retVal = liveECG_stop_streaming(handle);
+            retVal = SironaDriver.liveECG_stop_streaming(ref handle);
             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
             {
                 Console.Write("Failed to stop ECG streaming from the device.\n");
@@ -1035,18 +963,15 @@ namespace SironaDriverApplication
             return retVal;
         }
 
-        int test_file_download(ref SironaHandle handle)
+        public static int test_file_download(ref SironaHandle handle)
         {
-            int retVal = (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR;
-            char file_name[] = "battery.log";
-
+            string file_name = "battery.log";
             uint chunkSize = 0;
-
-            retVal = bulk_get_chunk_size(handle, &chunkSize);
+            int retVal = SironaDriver.bulk_get_chunk_size(ref handle, ref chunkSize);
             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
             {
                 Console.Write("Error getting bulk chunk size from the device.\n");
-                Console.Write("ERROR: %s\n", error_get_string(retVal));
+                Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
                 return retVal;
             }
 
@@ -1059,50 +984,42 @@ namespace SironaDriverApplication
                 return retVal;
             }
 
-            uint batteryFileDataChunkSize = 0;
-            char* batteryFileDataChunk = (char*)malloc(chunkSize);
+            var batteryFileDataChunk = new SironaValue();
+            batteryFileDataChunk.Allocate(chunkSize);
 
-            FILE* batteryLogFile;
-            batteryLogFile = fopen("battery.log", "wb");
-            if (batteryLogFile == NULL)
-            { //if file does not exist, create it
-                batteryLogFile = fopen("battery.log", "wb");
-                if (batteryLogFile == NULL)
-                {
-                    Console.Write("Failed to open an battery.log file.");
-                    free(batteryFileDataChunk);
-                    return -1;
-                }
+            var batteryLogFile = File.Open("battery.log", FileMode.Create);
+            if (batteryLogFile == null)
+            {
+                Console.Write("Failed to open an battery.log file.");
+                return -1;
             }
 
-            retVal = file_start_transfer(handle, sizeof(file_name), file_name);
+            retVal = SironaDriver.file_start_transfer(ref handle, file_name);
             if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
             {
                 Console.Write("Failed to start battery.log file data bulk transfer.\n");
-                fclose(batteryLogFile);
-                free(batteryFileDataChunk);
+                batteryLogFile.Close();
                 return retVal;
             }
 
             Console.Write("Start battery.log file data bulk transfer with success.\n");
 
-            uint chunkSequenceNumber = BULK_LAST_CHUNK;
-            uint receivedChunkSequenceNumber = BULK_FIRST_CHUNK;
+            uint chunkSequenceNumber = SironaDriverConstants.BULK_LAST_CHUNK;
+            uint receivedChunkSequenceNumber = SironaDriverConstants.BULK_FIRST_CHUNK;
             bool lastChunkReadWithSuccess = false;
             do
             {
 
-                retVal = bulk_read_data(handle, &receivedChunkSequenceNumber, &batteryFileDataChunkSize, batteryFileDataChunk);
+                retVal = SironaDriver.bulk_read_data(ref handle, ref receivedChunkSequenceNumber, ref batteryFileDataChunk);
                 if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
                 {
                     Console.Write("Error downloading the battery.log file data chunk %d.\n", chunkSequenceNumber + 1);
-                    Console.Write("ERROR: %s\n", error_get_string(retVal));
-                    fclose(batteryLogFile);
-                    free(batteryFileDataChunk);
+                    Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
+                    batteryLogFile.Close();
                     return retVal;
                 }
 
-                if (receivedChunkSequenceNumber == BULK_LAST_CHUNK)
+                if (receivedChunkSequenceNumber == SironaDriverConstants.BULK_LAST_CHUNK)
                 {
                     lastChunkReadWithSuccess = true;
                 }
@@ -1115,18 +1032,16 @@ namespace SironaDriverApplication
                         Console.Write("Wrong File bulk data chunk sequence number received.\n");
                         Console.Write("Expected chunk sequence number: %d Received chunk sequence number: %d.\n", chunkSequenceNumber + 1, receivedChunkSequenceNumber);
 
-                        retVal = file_stop_transfer(handle);
+                        retVal = SironaDriver.file_stop_transfer(ref handle);
                         if (retVal != (int)SironaDriverConstants.ErrorCode.DRIVER_NO_ERROR)
                         {
                             Console.Write("Error stopping the File data bulk transfer.\n");
-                            Console.Write("ERROR: %s\n", error_get_string(retVal));
-                            fclose(batteryLogFile);
-                            free(batteryFileDataChunk);
+                            Console.Write("ERROR: {0}\n", SironaDriver.error_get_string(retVal));
+                            batteryLogFile.Close();
                             return retVal;
                         }
 
-                        fclose(batteryLogFile);
-                        free(batteryFileDataChunk);
+                        batteryLogFile.Close();
                         Console.Write("Failed downloading battery.log file.\n");
                         return retVal;
 
@@ -1136,20 +1051,20 @@ namespace SironaDriverApplication
                 chunkSequenceNumber++;
 
                 Console.Write("The battery.log file data chunk %d was downloaded with success.\n", chunkSequenceNumber);
-                size_t j = 0;
-                for (j = 0; j < batteryFileDataChunkSize; j++)
+
+                byte[] AsArray = batteryFileDataChunk.GetValueAsByteArray();
+                foreach (var j in AsArray)
                 {
-                    Console.Write(batteryLogFile, "{0}", *(batteryFileDataChunk + j));
+                    batteryLogFile.WriteByte(j);
                 }
-                fflush(batteryLogFile);
+                batteryLogFile.Flush();
 
             } while (!lastChunkReadWithSuccess);
 
-            fclose(batteryLogFile);
-            free(batteryFileDataChunk);
+            batteryLogFile.Close();
 
             Console.Write("Downloading battery.log file data has finished with success.\n");
             return retVal;
-        }*/
+        }
     }
 }
