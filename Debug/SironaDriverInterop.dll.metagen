@@ -85,7 +85,7 @@ Class SironaDriverInterop.SironaDriver: AutoLayout, AnsiClass, Class, Public, Be
     liveECG_start_streaming(SironaHandle&): PrivateScope, Public, Static, HideBySig
     liveECG_stop_streaming(SironaHandle&): PrivateScope, Public, Static, HideBySig
     firmware_upload_start(SironaHandle&, UInt32): PrivateScope, Public, Static, HideBySig
-    firmware_upload_chunk(SironaHandle&, UInt32, UInt32, SironaValue&): PrivateScope, Public, Static, HideBySig
+    firmware_upload_chunk(SironaHandle&, UInt32, SironaValue&): PrivateScope, Public, Static, HideBySig
     firmware_apply(SironaHandle&): PrivateScope, Public, Static, HideBySig
     get_battery_voltage(SironaHandle&, UInt32&): PrivateScope, Public, Static, HideBySig
     device_ping(SironaHandle&): PrivateScope, Public, Static, HideBySig

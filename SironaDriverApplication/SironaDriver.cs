@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SironaDriverApplication
 {
-    class SironaDriver
+    static class SironaDriverConstants
     {
         public enum DriverDeviceCode
         {

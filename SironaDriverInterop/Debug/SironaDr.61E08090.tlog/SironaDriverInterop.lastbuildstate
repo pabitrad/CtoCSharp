@@ -1,2 +1,2 @@
-#TargetFrameworkVersion=v4.0:PlatformToolSet=v140:EnableManagedIncrementalBuild=true:VCToolArchitecture=Native32Bit:WindowsTargetPlatformVersion=8.1
-Debug|Win32|d:\users\brandon\documents\visual studio 2015\Projects\SironaDriverApplication\|
+#TargetFrameworkVersion=v4.0:PlatformToolSet=v120:EnableManagedIncrementalBuild=true:VCToolArchitecture=Native32Bit
+Debug|Win32|D:\Users\Brandon\Documents\Visual Studio 2015\Projects\SironaDriverApplication\|
