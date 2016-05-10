@@ -1,32 +1,4 @@
 ﻿  SironaDriverInterop.cpp
-SironaDriverInterop.cpp(171): warning C4965: implicit box of integer 0; use nullptr or explicit cast
-SironaDriverInterop.cpp(176): warning C4965: implicit box of integer 0; use nullptr or explicit cast
-SironaDriverInterop.cpp(186): warning C4965: implicit box of integer 0; use nullptr or explicit cast
-SironaDriverInterop.cpp(191): warning C4965: implicit box of integer 0; use nullptr or explicit cast
-SironaDriverInterop.cpp(196): warning C4965: implicit box of integer 0; use nullptr or explicit cast
-SironaDriverInterop.cpp(201): warning C4965: implicit box of integer 0; use nullptr or explicit cast
-SironaDriverInterop.cpp(206): warning C4965: implicit box of integer 0; use nullptr or explicit cast
-SironaDriverInterop.cpp(211): warning C4965: implicit box of integer 0; use nullptr or explicit cast
-SironaDriverInterop.cpp(216): warning C4965: implicit box of integer 0; use nullptr or explicit cast
-SironaDriverInterop.cpp(221): warning C4965: implicit box of integer 0; use nullptr or explicit cast
-SironaDriverInterop.cpp(226): warning C4965: implicit box of integer 0; use nullptr or explicit cast
-SironaDriverInterop.cpp(231): warning C4965: implicit box of integer 0; use nullptr or explicit cast
-SironaDriverInterop.cpp(236): warning C4965: implicit box of integer 0; use nullptr or explicit cast
-SironaDriverInterop.cpp(241): warning C4965: implicit box of integer 0; use nullptr or explicit cast
-SironaDriverInterop.cpp(246): warning C4965: implicit box of integer 0; use nullptr or explicit cast
-SironaDriverInterop.cpp(251): warning C4965: implicit box of integer 0; use nullptr or explicit cast
-SironaDriverInterop.cpp(256): warning C4965: implicit box of integer 0; use nullptr or explicit cast
-SironaDriverInterop.cpp(261): warning C4965: implicit box of integer 0; use nullptr or explicit cast
-SironaDriverInterop.cpp(266): warning C4965: implicit box of integer 0; use nullptr or explicit cast
-SironaDriverInterop.cpp(271): warning C4965: implicit box of integer 0; use nullptr or explicit cast
-SironaDriverInterop.cpp(276): warning C4965: implicit box of integer 0; use nullptr or explicit cast
-SironaDriverInterop.cpp(281): warning C4965: implicit box of integer 0; use nullptr or explicit cast
-SironaDriverInterop.cpp(286): warning C4965: implicit box of integer 0; use nullptr or explicit cast
-SironaDriverInterop.cpp(291): warning C4965: implicit box of integer 0; use nullptr or explicit cast
-SironaDriverInterop.cpp(296): warning C4965: implicit box of integer 0; use nullptr or explicit cast
-SironaDriverInterop.cpp(301): warning C4965: implicit box of integer 0; use nullptr or explicit cast
-SironaDriverInterop.cpp(306): warning C4965: implicit box of integer 0; use nullptr or explicit cast
-SironaDriverInterop.cpp(311): warning C4965: implicit box of integer 0; use nullptr or explicit cast
   AssemblyInfo.obj : /DEBUG:FASTLINK is not supported when managed code is present; restarting link with /DEBUG:FULL
   SironaDriverInterop.vcxproj -> d:\users\brandon\documents\visual studio 2015\Projects\SironaDriverApplication\Debug\SironaDriverInterop.dll
   SironaDriverInterop.vcxproj -> d:\users\brandon\documents\visual studio 2015\Projects\SironaDriverApplication\Debug\SironaDriverInterop.pdb (Partial PDB)

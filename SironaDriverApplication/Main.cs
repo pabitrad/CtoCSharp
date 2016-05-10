@@ -99,8 +99,8 @@ namespace SironaDriverApplication
             }
 
             int devices_found = 0;
-            ErrorCode retVal = find_devices(ref devices_found);
-            if ((retVal != ErrorCode.DRIVER_NO_ERROR) && (retVal != ErrorCode.DRIVER_NO_MORE_DEVICES))
+            int retVal = (int)find_devices(ref devices_found);
+            if ((retVal != (int)ErrorCode.DRIVER_NO_ERROR) && (retVal != (int)ErrorCode.DRIVER_NO_MORE_DEVICES))
             {
                 Console.WriteLine("Error finding Sirona devices.\n");
                 return -1;
@@ -146,74 +146,74 @@ namespace SironaDriverApplication
 
             var handle = new SironaHandle();
 
-            retVal = (ErrorCode)open((int)g_devType, g_devPortName, ref handle, g_key);
-            if (retVal != ErrorCode.DRIVER_NO_ERROR)
+            retVal = open((int)g_devType, g_devPortName, ref handle, g_key);
+            if (retVal != (int)ErrorCode.DRIVER_NO_ERROR)
             {
                 Console.WriteLine("Error opening the device.\n");
-                //Console.WriteLine("ERROR: {0}\n", error_get_string((int)retVal));
-                return (int)retVal;
+                Console.WriteLine("ERROR: {0}\n", error_get_string(retVal));
+                return retVal;
             }
 
-            /*if (string.Equals(args[1], "test-parameter-write"))
+            if (string.Equals(args[1], "test-parameter-write"))
             {
-                retVal = test_parameter_write(handle);
+                retVal = test_parameter_write(ref handle);
 
             }
             else if (string.Equals(args[1], "test-parameter-read"))
             {
-                retVal = test_parameter_read(handle);
+                retVal = test_parameter_read(ref handle);
 
             }
             else if (string.Equals(args[1], "test-parameter-read-all"))
             {
-                retVal = test_parameter_read_all(handle);
+                retVal = test_parameter_read_all(ref handle);
 
             }
             else if (string.Equals(args[1], "test-parameter-commit"))
             {
-                retVal = test_parameter_commit(handle);
+                retVal = test_parameter_commit(ref handle);
 
             }
             else if (string.Equals(args[1], "test-event-get-count"))
             {
-                retVal = test_event_get_count(handle);
+                retVal = test_event_get_count(ref handle);
 
             }
             else if (string.Equals(args[1], "test-event-get-header-item"))
             {
-                retVal = test_event_get_header_item(handle);
+                retVal = test_event_get_header_item(ref handle);
 
             }
-            else if (string.Equals(args[1], "test-event-download"))
+            /*else if (string.Equals(args[1], "test-event-download"))
             {
-                retVal = test_event_download(handle);
+                retVal = test_event_download(ref handle);
 
             }
             else if (string.Equals(args[1], "test-event-erase-all"))
             {
-                retVal = test_event_erase_all(handle);
+                retVal = test_event_erase_all(ref handle);
 
             }
             else if (string.Equals(args[1], "test-event-record"))
             {
-                retVal = test_event_record(handle);
+                retVal = test_event_record(ref handle);
 
             }
             else if (string.Equals(args[1], "test-holter-download"))
             {
-                retVal = test_holter_download(handle);
+                retVal = test_holter_download(ref handle);
 
             }
             else if (string.Equals(args[1], "test-holter-erase"))
             {
-                retVal = test_holter_erase(handle);
+                retVal = test_holter_erase(ref handle);
 
             }
             else if (string.Equals(args[1], "test-live-ecg-streaming"))
             {
                 if (g_devType != DriverDeviceCode.USB)
                 {
-                    retVal = test_live_ecg_streaming(handle);
+                    retVal = test_live_ecg_streaming(ref handle);
                 }
                 else
                 {
@@ -223,24 +223,24 @@ namespace SironaDriverApplication
             }
             else if (string.Equals(args[1], "test-firmware-upload"))
             {
-                retVal = test_firmware_upload(handle);
+                retVal = test_firmware_upload(ref handle);
 
             }
             else if (string.Equals(args[1], "test-status-get-battery-voltage"))
             {
-                retVal = test_status_get_battery_voltage(handle);
+                retVal = test_status_get_battery_voltage(ref handle);
 
             }
             else if (string.Equals(args[1], "test-status-device-ping"))
             {
-                retVal = test_status_device_ping(handle);
+                retVal = test_status_device_ping(ref handle);
 
             }
             else if (string.Equals(args[1], "test-status-stream-cable-id"))
             {
                 if (g_devType != DriverDeviceCode.USB)
                 {
-                    retVal = test_status_stream_cable_id(handle);
+                    retVal = test_status_stream_cable_id(ref handle);
                 }
                 else
                 {
@@ -250,18 +250,18 @@ namespace SironaDriverApplication
             }
             else if (string.Equals(args[1], "test-file-download"))
             {
-                retVal = test_file_download(handle);
+                retVal = test_file_download(ref handle);
 
-            }
+            }*/
             else
             {
                 Console.WriteLine("Unknown first parameter (test-name).\n{0}\n", usageString);
-            }*/
+            }
 
             close(ref handle);
 
             Console.WriteLine("Test executed with success.\n");
-            return (int)retVal;
+            return retVal;
         }
     }
 }

@@ -28,23 +28,31 @@ namespace SironaDriverInterop {
 		void* GetRawValue();
 		size_t GetRawSize();
 
-		void SetValueAsUInt32(UInt32^ Int);
+		void SetValueAsUInt16(UInt16 Int);
+		void SetValueAsUInt16Array(array<UInt16>^ Int);
+		void SetValueAsInt16(Int16 Int);
+		void SetValueAsInt16Array(array<Int16>^ IntArray);
+		void SetValueAsUInt32(UInt32 Int);
 		void SetValueAsUInt32Array(array<UInt32>^ IntArray);
-		void SetValueAsInt32(Int32^ Int);
+		void SetValueAsInt32(Int32 Int);
 		void SetValueAsInt32Array(array<Int32>^ IntArray);
 		void SetValueAsString(String^ String);
-		void SetValueAsByte(Byte^ Byte);
+		void SetValueAsByte(Byte Byte);
 		void SetValueAsByteArray(array<Byte>^ ByteArray);
 
-		UInt32^ GetValueAsUInt32();
+		UInt16 GetValueAsUInt16();
+		array<UInt16>^ GetValueAsUInt16Array();
+		Int16 GetValueAsInt16();
+		array<Int16>^ GetValueAsInt16Array();
+		UInt32 GetValueAsUInt32();
 		array<UInt32>^ GetValueAsUInt32Array();
-		Int32^ GetValueAsInt32();
+		Int32 GetValueAsInt32();
 		array<Int32>^ GetValueAsInt32Array();
 		String^ GetValueAsString();
-		Byte^ GetValueAsByte();
+		Byte GetValueAsByte();
 		array<Byte>^ GetValueAsByteArray();
 
-		UInt32^ GetValueSize();
+		UInt32 GetValueSize();
 	};
 
 	public ref class SironaDriver
@@ -58,7 +66,7 @@ namespace SironaDriverInterop {
 		* @param [in] type             Device type.
 		* @return error_code_t         Error code for the function execution success.
 		*/
-		static Int32^ enum_open(SironaEnumHandle^% enum_handle, Int32^ type);
+		static Int32 enum_open(SironaEnumHandle^% enum_handle, Int32^ type);
 
 
 		/**
@@ -72,7 +80,7 @@ namespace SironaDriverInterop {
 		* @param [out] connection_type         Type of connection (USB or Bluetooth).
 		* @return error_code_t                 Error code for the function execution success.
 		*/
-		static Int32^ enum_next(SironaEnumHandle^% enum_handle,
+		static Int32 enum_next(SironaEnumHandle^% enum_handle,
 			String^% device_serial_number,
 			String^% comm_port_name,
 			Int32% connection_type);
@@ -99,7 +107,7 @@ namespace SironaDriverInterop {
 		* @param [in] xxtea_key        Xxtea key for initial communication with the device.
 		* @return error_code_t         Error code for the function execution success.
 		*/
-		static Int32^ open(const Int32^ connection_type,
+		static Int32 open(const Int32^ connection_type,
 			String^ comm_port_name,
 			SironaHandle^% handle,
 			array<Int32>^ xxtea_key);
@@ -119,7 +127,7 @@ namespace SironaDriverInterop {
 		* @param [in] handle               Handle for the device.
 		* @return handle connection_type   Handle connection_type (USB or Bluetooth).
 		*/
-		static Int32^ get_type(SironaHandle^% handle);
+		static Int32 get_type(SironaHandle^% handle);
 
 
 		/* Configuration parameters */
@@ -135,9 +143,9 @@ namespace SironaDriverInterop {
 		* @param [out] value       The buffer allocated for the config parameter value.
 		* @return error_code_t     Error code for the function execution success.
 		*/
-		static Int32^ parameter_read(SironaHandle^% handle,
+		static Int32 parameter_read(SironaHandle^% handle,
 			String^ name,
-			SironaValue^ value);
+			SironaValue^% value);
 
 		/**
 		* @brief Writes configuration parameter value.
@@ -151,9 +159,9 @@ namespace SironaDriverInterop {
 		* @param [in] value        The value of the config parameter we would like to write.
 		* @return error_code_t     Error code for the function execution success.
 		*/
-		static Int32^ parameter_write(SironaHandle^% handle,
+		static Int32 parameter_write(SironaHandle^% handle,
 			String^ name,
-			SironaValue^ value);
+			SironaValue^% value);
 
 		/**
 		* @brief Commits the configuration parameters that were writen.
@@ -163,7 +171,7 @@ namespace SironaDriverInterop {
 		* @param [in] handle       Handle for the device.
 		* @return error_code_t     Error code for the function execution success.
 		*/
-		static Int32^ parameter_commit(SironaHandle^% handle);
+		static Int32 parameter_commit(SironaHandle^% handle);
 
 		/**
 		* @brief Gets the total number configuration parameters on the device.
@@ -175,8 +183,8 @@ namespace SironaDriverInterop {
 		* @param [out] number_of_parameters    Number of the config parameters.
 		* @return error_code_t                 Error code for the function execution success.
 		*/
-		static Int32^ get_number_of_parameters(SironaHandle^% handle,
-			UInt32^ number_of_parameters);
+		static Int32 get_number_of_parameters(SironaHandle^% handle,
+			UInt32^% number_of_parameters);
 
 		/**
 		* @brief Reads configuration parameter value.
@@ -194,10 +202,10 @@ namespace SironaDriverInterop {
 		*                              Must be at least 20 bytes long.
 		* @return error_code_t         Error code for the function execution success.
 		*/
-		static Int32^ parameter_read_index(SironaHandle^% handle,
+		static Int32 parameter_read_index(SironaHandle^% handle,
 			UInt32^ parameter_index,
-			String^ name,
-			SironaValue^ value);
+			String^% name,
+			SironaValue^% value);
 
 		/* Bulk data transfer */
 		/**
@@ -211,8 +219,8 @@ namespace SironaDriverInterop {
 		* @param [out] chunk_size  Number of the config parameters.
 		* @return error_code_t     Error code for the function execution success.
 		*/
-		static Int32^ bulk_get_chunk_size(SironaHandle^% handle,
-			UInt32^ chunk_size);
+		static Int32 bulk_get_chunk_size(SironaHandle^% handle,
+			UInt32^% chunk_size);
 
 		/**
 		* @brief Tells the driver to read data chunk from the device.
@@ -227,9 +235,9 @@ namespace SironaDriverInterop {
 		* @param [out] data        The buffer allocated for the chunk from the Event to be downloaded from the device.
 		* @return error_code_t     Error code for the function execution success.
 		*/
-		static Int32^ bulk_read_data(SironaHandle^% handle,
-			UInt32^ seq_no,
-			SironaValue^ data);
+		static Int32 bulk_read_data(SironaHandle^% handle,
+			UInt32^% seq_no,
+			SironaValue^% data);
 
 		/**
 		* @brief Tells the driver to read live ECG data chunk from the device.
@@ -245,10 +253,10 @@ namespace SironaDriverInterop {
 		* @param [out] data        The buffer allocated for the chunk from the Event to be downloaded from the device.
 		* @return error_code_t     Error code for the function execution success.
 		*/
-		static Int32^ liveECG_bulk_read_data(SironaHandle^% handle,
-			UInt32^ seq_no,
-			UInt32^ status,
-			SironaValue^ data);
+		static Int32 liveECG_bulk_read_data(SironaHandle^% handle,
+			UInt32^% seq_no,
+			UInt32^% status,
+			SironaValue^% data);
 
 		/* Event */
 		/**
@@ -260,8 +268,8 @@ namespace SironaDriverInterop {
 		* @param [out] event_count     Number of Events recorded on the device.
 		* @return error_code_t         Error code for the function execution success.
 		*/
-		static Int32^ event_get_count(SironaHandle^% handle,
-			UInt32^ event_count);
+		static Int32 event_get_count(SironaHandle^% handle,
+			UInt32^% event_count);
 
 		/**
 		* @brief Gets one item from the Event's Header.
@@ -276,10 +284,10 @@ namespace SironaDriverInterop {
 		* @param [out] value       The buffer allocated for the Header item we would like to get.
 		* @return error_code_t     Error code for the function execution success.
 		*/
-		static Int32^ event_get_header_item(SironaHandle^% handle,
+		static Int32 event_get_header_item(SironaHandle^% handle,
 			UInt32^ event_no,
 			String^ item,
-			SironaValue^ value);
+			SironaValue^% value);
 
 		/**
 		* @brief Tells the device to start bulk transfer of the specified event's data.
@@ -292,7 +300,7 @@ namespace SironaDriverInterop {
 		* @param [in] last_chunk_no    The number of the chunk to stop the bulk transfer with.
 		* @return error_code_t         Error code for the function execution success.
 		*/
-		static Int32^ event_start_transfer(SironaHandle^% handle,
+		static Int32 event_start_transfer(SironaHandle^% handle,
 			UInt32^ event_no,
 			UInt32^ first_chunk_no,
 			UInt32^ last_chunk_no);
@@ -305,7 +313,7 @@ namespace SironaDriverInterop {
 		* @param [in] handle           Handle for the device.
 		* @return error_code_t         Error code for the function execution success.
 		*/
-		static Int32^ event_stop_transfer(SironaHandle^% handle);
+		static Int32 event_stop_transfer(SironaHandle^% handle);
 
 		/**
 		* @brief Erases all recorded Events on the device.
@@ -315,7 +323,7 @@ namespace SironaDriverInterop {
 		* @param [in] handle       Handle for the device.
 		* @return error_code_t     Error code for the function execution success.
 		*/
-		static Int32^ event_erase_all(SironaHandle^% handle);
+		static Int32 event_erase_all(SironaHandle^% handle);
 
 		/**
 		* @brief Records a manual Event on the device.
@@ -325,7 +333,7 @@ namespace SironaDriverInterop {
 		* @param [in] handle       Handle for the device.
 		* @return error_code_t     Error code for the function execution success.
 		*/
-		static Int32^ event_record(SironaHandle^% handle);
+		static Int32 event_record(SironaHandle^% handle);
 
 		/**
 		* @brief Cancels recording of a manual Event on the device, if one in progress.
@@ -335,7 +343,7 @@ namespace SironaDriverInterop {
 		* @param [in] handle       Handle for the device.
 		* @return error_code_t     Error code for the function execution success.
 		*/
-		static Int32^ event_record_cancel(SironaHandle^% handle);
+		static Int32 event_record_cancel(SironaHandle^% handle);
 
 		/**
 		* @brief Marks the Event as sent.
@@ -346,7 +354,7 @@ namespace SironaDriverInterop {
 		* @param [in] event_no     The number of the Event to be downloaded from the device.
 		* @return error_code_t     Error code for the function execution success.
 		*/
-		static Int32^ event_mark_sent(SironaHandle^% handle,
+		static Int32 event_mark_sent(SironaHandle^% handle,
 			UInt32^ event_no);
 
 		/**
@@ -359,9 +367,9 @@ namespace SironaDriverInterop {
 		* @param [out] annotation_size_in_bytes    The length of the annotation data for the specified Event in bytes.
 		* @return error_code_t                     Error code for the function execution success.
 		*/
-		static Int32^ annotation_get_size(SironaHandle^% handle,
+		static Int32 annotation_get_size(SironaHandle^% handle,
 			UInt32^ event_no,
-			UInt32^ annotation_size_in_bytes);
+			UInt32^% annotation_size_in_bytes);
 
 
 		/**
@@ -375,7 +383,7 @@ namespace SironaDriverInterop {
 		* @param [in] last_chunk_no    The number of the chunk to stop the bulk transfer with.
 		* @return error_code_t         Error code for the function execution success.
 		*/
-		static Int32^ annotation_start_transfer(SironaHandle^% handle,
+		static Int32 annotation_start_transfer(SironaHandle^% handle,
 			UInt32^ event_no,
 			UInt32^ first_chunk_no,
 			UInt32^ last_chunk_no);
@@ -388,7 +396,7 @@ namespace SironaDriverInterop {
 		* @param [in] handle           Handle for the device.
 		* @return error_code_t         Error code for the function execution success.
 		*/
-		static Int32^ annotation_stop_transfer(SironaHandle^% handle);
+		static Int32 annotation_stop_transfer(SironaHandle^% handle);
 
 		/* Holter */
 		/**
@@ -400,8 +408,8 @@ namespace SironaDriverInterop {
 		* @param [out] holter_size_in_bytes    The length of the Holter data recorded on the device in bytes.
 		* @return error_code_t                 Error code for the function execution success.
 		*/
-		static Int32^ holter_get_size(SironaHandle^% handle,
-			UInt32^ holter_size_in_bytes);
+		static Int32 holter_get_size(SironaHandle^% handle,
+			UInt32^% holter_size_in_bytes);
 
 		/**
 		* @brief Tells the device to start the bulk transfer of the holter data.
@@ -413,7 +421,7 @@ namespace SironaDriverInterop {
 		* @param [in] last_chunk_no    The number of the chunk to stop the bulk transfer with.
 		* @return error_code_t         Error code for the function execution success.
 		*/
-		static Int32^ holter_start_transfer(SironaHandle^% handle,
+		static Int32 holter_start_transfer(SironaHandle^% handle,
 			UInt32^ first_chunk_no,
 			UInt32^ last_chunk_no);
 
@@ -425,7 +433,7 @@ namespace SironaDriverInterop {
 		* @param [in] handle           Handle for the device.
 		* @return error_code_t         Error code for the function execution success.
 		*/
-		static Int32^ holter_stop_transfer(SironaHandle^% handle);
+		static Int32 holter_stop_transfer(SironaHandle^% handle);
 
 		/**
 		* @brief Erases the recorded Holter data on the device.
@@ -435,7 +443,7 @@ namespace SironaDriverInterop {
 		* @param [in] handle       Handle for the device.
 		* @return error_code_t     Error code for the function execution success.
 		*/
-		static Int32^ holter_erase(SironaHandle^% handle);
+		static Int32 holter_erase(SironaHandle^% handle);
 
 		/* Live ECG streaming */
 		/**
@@ -446,7 +454,7 @@ namespace SironaDriverInterop {
 		* @param [in] handle       Handle for the device.
 		* @return error_code_t     Error code for the function execution success.
 		*/
-		static Int32^ liveECG_start_streaming(SironaHandle^% handle);
+		static Int32 liveECG_start_streaming(SironaHandle^% handle);
 
 		/**
 		* @brief Stops live ECG streaming from the device.
@@ -456,7 +464,7 @@ namespace SironaDriverInterop {
 		* @param [in] handle       Handle for the device.
 		* @return error_code_t     Error code for the function execution success.
 		*/
-		static Int32^ liveECG_stop_streaming(SironaHandle^% handle);
+		static Int32 liveECG_stop_streaming(SironaHandle^% handle);
 
 		/* Firmware */
 		/**
@@ -468,7 +476,7 @@ namespace SironaDriverInterop {
 		* @param [in] fw_size      The total size of the firmware in bytes.
 		* @return error_code_t     Error code for the function execution success.
 		*/
-		static Int32^ firmware_upload_start(SironaHandle^% handle,
+		static Int32 firmware_upload_start(SironaHandle^% handle,
 			UInt32 fw_size);
 
 		/**
@@ -486,10 +494,10 @@ namespace SironaDriverInterop {
 		* @param [in] firmware_chunk   The buffer holding the firmware chunk to be uploaded to the device.
 		* @return error_code_t         Error code for the function execution success.
 		*/
-		static Int32^ firmware_upload_chunk(SironaHandle^% handle,
+		static Int32 firmware_upload_chunk(SironaHandle^% handle,
 			UInt32 cnunk_no,
 			UInt32 chunk_size,
-			void *firmware_chunk);
+			SironaValue^% firmware_chunk);
 
 		/**
 		* @brief Tells the device to apply the new Firmware by rebooting.
@@ -499,7 +507,7 @@ namespace SironaDriverInterop {
 		* @param [in] handle       Handle for the device.
 		* @return error_code_t     Error code for the function execution success.
 		*/
-		static Int32^ firmware_apply(SironaHandle^% handle);
+		static Int32 firmware_apply(SironaHandle^% handle);
 
 		/* Status */
 		/**
@@ -511,8 +519,8 @@ namespace SironaDriverInterop {
 		* @param [out] battery_voltage  The current level of the device's battery voltage in mV.
 		* @return error_code_t         Error code for the function execution success.
 		*/
-		static Int32^ get_battery_voltage(SironaHandle^% handle,
-			UInt32 *battery_voltage);
+		static Int32 get_battery_voltage(SironaHandle^% handle,
+			UInt32^% battery_voltage);
 
 		/**
 		* @brief Pings the device.
@@ -522,7 +530,7 @@ namespace SironaDriverInterop {
 		* @param [in] handle       Handle for the device.
 		* @return error_code_t     Error code for the function execution success.
 		*/
-		static Int32^ device_ping(SironaHandle^% handle);
+		static Int32 device_ping(SironaHandle^% handle);
 
 		/**
 		* @brief Tells the device to start the Procedure.
@@ -532,7 +540,7 @@ namespace SironaDriverInterop {
 		* @param [in] handle       Handle for the device.
 		* @return error_code_t     Error code for the function execution success.
 		*/
-		static Int32^ start_procedure(SironaHandle^% handle);
+		static Int32 start_procedure(SironaHandle^% handle);
 
 		/**
 		* @brief Tells the device to stop the Procedure.
@@ -542,7 +550,7 @@ namespace SironaDriverInterop {
 		* @param [in] handle       Handle for the device.
 		* @return error_code_t     Error code for the function execution success.
 		*/
-		static Int32^ stop_procedure(SironaHandle^% handle);
+		static Int32 stop_procedure(SironaHandle^% handle);
 
 		/**
 		* @brief Tells the device to start streaming status messages for the specified parameter.
@@ -553,7 +561,7 @@ namespace SironaDriverInterop {
 		* @param [in] parameter    The specified parameter that we would like to receive status messages for.
 		* @return error_code_t     Error code for the function execution success.
 		*/
-		static Int32^ start_status_stream(SironaHandle^% handle,
+		static Int32 start_status_stream(SironaHandle^% handle,
 			UInt32 parameter);
 
 		/**
@@ -564,7 +572,7 @@ namespace SironaDriverInterop {
 		* @param [in] handle       Handle for the device.
 		* @return error_code_t     Error code for the function execution success.
 		*/
-		static Int32^ stop_status_stream(SironaHandle^% handle);
+		static Int32 stop_status_stream(SironaHandle^% handle);
 
 		/**
 		* @brief Tells the device erase recorded ECG data and write default configuration.
@@ -574,7 +582,7 @@ namespace SironaDriverInterop {
 		* @param [in] handle       Handle for the device.
 		* @return error_code_t     Error code for the function execution success.
 		*/
-		static Int32^ soft_reset(SironaHandle^% handle);
+		static Int32 soft_reset(SironaHandle^% handle);
 
 		/**
 		* @brief Sends system time and time zone to the device.
@@ -588,7 +596,7 @@ namespace SironaDriverInterop {
 		* @param [in] time_zone    The system time zone in minutes offset from GMT.
 		* @return error_code_t     Error code for the function execution success.
 		*/
-		static Int32^ set_device_time(SironaHandle^% handle,
+		static Int32 set_device_time(SironaHandle^% handle,
 			UInt32^ utc_time,
 			UInt32^ time_zone);
 
@@ -603,7 +611,7 @@ namespace SironaDriverInterop {
 		* @param [in] file_name		The file name string.
 		* @return error_code_t			Error code for the function execution success.
 		*/
-		static Int32^ file_start_transfer(SironaHandle^% handle,
+		static Int32 file_start_transfer(SironaHandle^% handle,
 			String^ file_name);
 
 		/**
@@ -614,7 +622,7 @@ namespace SironaDriverInterop {
 		* @param [in] handle       Handle for the device.
 		* @return error_code_t     Error code for the function execution success.
 		*/
-		static Int32^ file_stop_transfer(SironaHandle^% handle);
+		static Int32 file_stop_transfer(SironaHandle^% handle);
 
 		/* Error */
 		/**

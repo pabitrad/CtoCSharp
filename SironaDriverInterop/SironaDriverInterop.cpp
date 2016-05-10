@@ -22,7 +22,27 @@ size_t SironaDriverInterop::SironaValue::GetRawSize()
 	return Size;
 }
 
-void SironaDriverInterop::SironaValue::SetValueAsUInt32(UInt32^ Int)
+void SironaDriverInterop::SironaValue::SetValueAsUInt16(UInt16 Int)
+{
+	throw gcnew System::NotImplementedException();
+}
+
+void SironaDriverInterop::SironaValue::SetValueAsUInt16Array(array<UInt16>^ Int)
+{
+	throw gcnew System::NotImplementedException();
+}
+
+void SironaDriverInterop::SironaValue::SetValueAsInt16(Int16 Int)
+{
+	throw gcnew System::NotImplementedException();
+}
+
+void SironaDriverInterop::SironaValue::SetValueAsInt16Array(array<Int16>^ IntArray)
+{
+	throw gcnew System::NotImplementedException();
+}
+
+void SironaDriverInterop::SironaValue::SetValueAsUInt32(UInt32 Int)
 {
 	throw gcnew System::NotImplementedException();
 }
@@ -32,7 +52,7 @@ void SironaDriverInterop::SironaValue::SetValueAsUInt32Array(array<UInt32>^ IntA
 	throw gcnew System::NotImplementedException();
 }
 
-void SironaDriverInterop::SironaValue::SetValueAsInt32(Int32^ Int)
+void SironaDriverInterop::SironaValue::SetValueAsInt32(Int32 Int)
 {
 	throw gcnew System::NotImplementedException();
 }
@@ -47,7 +67,7 @@ void SironaDriverInterop::SironaValue::SetValueAsString(String^ String)
 	throw gcnew System::NotImplementedException();
 }
 
-void SironaDriverInterop::SironaValue::SetValueAsByte(Byte^ Byte)
+void SironaDriverInterop::SironaValue::SetValueAsByte(Byte Byte)
 {
 	throw gcnew System::NotImplementedException();
 }
@@ -57,7 +77,31 @@ void SironaDriverInterop::SironaValue::SetValueAsByteArray(array<Byte>^ ByteArra
 	throw gcnew System::NotImplementedException();
 }
 
-UInt32^ SironaDriverInterop::SironaValue::GetValueAsUInt32()
+UInt16 SironaDriverInterop::SironaValue::GetValueAsUInt16()
+{
+	throw gcnew System::NotImplementedException();
+	// TODO: insert return statement here
+}
+
+array<UInt16>^ SironaDriverInterop::SironaValue::GetValueAsUInt16Array()
+{
+	throw gcnew System::NotImplementedException();
+	// TODO: insert return statement here
+}
+
+Int16 SironaDriverInterop::SironaValue::GetValueAsInt16()
+{
+	throw gcnew System::NotImplementedException();
+	// TODO: insert return statement here
+}
+
+array<Int16>^ SironaDriverInterop::SironaValue::GetValueAsInt16Array()
+{
+	throw gcnew System::NotImplementedException();
+	// TODO: insert return statement here
+}
+
+UInt32 SironaDriverInterop::SironaValue::GetValueAsUInt32()
 {
 	throw gcnew System::NotImplementedException();
 	// TODO: insert return statement here
@@ -69,7 +113,7 @@ array<UInt32>^ SironaDriverInterop::SironaValue::GetValueAsUInt32Array()
 	// TODO: insert return statement here
 }
 
-Int32^ SironaDriverInterop::SironaValue::GetValueAsInt32()
+Int32 SironaDriverInterop::SironaValue::GetValueAsInt32()
 {
 	throw gcnew System::NotImplementedException();
 	// TODO: insert return statement here
@@ -87,7 +131,7 @@ String^ SironaDriverInterop::SironaValue::GetValueAsString()
 	// TODO: insert return statement here
 }
 
-Byte^ SironaDriverInterop::SironaValue::GetValueAsByte()
+Byte SironaDriverInterop::SironaValue::GetValueAsByte()
 {
 	throw gcnew System::NotImplementedException();
 	// TODO: insert return statement here
@@ -99,13 +143,13 @@ array<Byte>^ SironaDriverInterop::SironaValue::GetValueAsByteArray()
 	// TODO: insert return statement here
 }
 
-UInt32^ SironaDriverInterop::SironaValue::GetValueSize()
+UInt32 SironaDriverInterop::SironaValue::GetValueSize()
 {
 	throw gcnew System::NotImplementedException();
 	// TODO: insert return statement here
 }
 
-Int32^ SironaDriverInterop::SironaDriver::enum_open(SironaEnumHandle^% enum_handle, Int32^ type)
+Int32 SironaDriverInterop::SironaDriver::enum_open(SironaEnumHandle^% enum_handle, Int32^ type)
 {
 	void* Ptr = nullptr;
 	int Return = sironadriver_enum_open(&Ptr, (int)type);
@@ -113,7 +157,7 @@ Int32^ SironaDriverInterop::SironaDriver::enum_open(SironaEnumHandle^% enum_hand
 	return Return;
 }
 
-Int32^ SironaDriverInterop::SironaDriver::enum_next(SironaEnumHandle^% enum_handle, String^% device_serial_number, String^% comm_port_name, Int32% connection_type)
+Int32 SironaDriverInterop::SironaDriver::enum_next(SironaEnumHandle^% enum_handle, String^% device_serial_number, String^% comm_port_name, Int32% connection_type)
 {
 	IntPtr SNPtr = Marshal::StringToHGlobalAnsi(device_serial_number);
 	IntPtr CPPtr = Marshal::StringToHGlobalAnsi(comm_port_name);
@@ -138,11 +182,11 @@ void SironaDriverInterop::SironaDriver::enum_close(SironaEnumHandle^% enum_handl
 }
 
 static int g_key[] = { 0x000000CE, 0x000000CA, 0x000000CA, 0x000000FE };
-Int32^ SironaDriverInterop::SironaDriver::open(const Int32^ connection_type, String^ comm_port_name, SironaHandle^% handle, array<Int32>^ xxtea_key)
+Int32 SironaDriverInterop::SironaDriver::open(const Int32^ connection_type, String^ comm_port_name, SironaHandle^% handle, array<Int32>^ xxtea_key)
 {
-	void* Ptr = handle->Handle;
 	IntPtr CPPtr = Marshal::StringToHGlobalAnsi(comm_port_name);
 	char* NativePortName = static_cast<char*>(CPPtr.ToPointer());
+	void* Ptr = nullptr;
 
 	int Return = sironadriver_open((const int)connection_type, NativePortName, &Ptr, g_key);
 
@@ -155,198 +199,213 @@ Int32^ SironaDriverInterop::SironaDriver::open(const Int32^ connection_type, Str
 
 void SironaDriverInterop::SironaDriver::close(SironaHandle^% handle)
 {
-	void* Ptr = handle->Handle;
-	sironadriver_close(&Ptr);
-	handle->Handle = Ptr;
+	sironadriver_close(handle->Handle);
 }
 
-Int32^ SironaDriverInterop::SironaDriver::get_type(SironaHandle^% handle)
+Int32 SironaDriverInterop::SironaDriver::get_type(SironaHandle^% handle)
 {
-	void* Ptr = handle->Handle;
-	return sironadriver_get_type(&Ptr);
+	return sironadriver_get_type(handle->Handle);
 }
 
-Int32^ SironaDriverInterop::SironaDriver::parameter_read(SironaHandle^% handle, String^ name, SironaValue^ value)
+Int32 SironaDriverInterop::SironaDriver::parameter_read(SironaHandle^% handle, String^ name, SironaValue^% value)
 {
 	return 0;
 }
 
-Int32^ SironaDriverInterop::SironaDriver::parameter_write(SironaHandle^% handle, String^ name, SironaValue^ value)
+Int32 SironaDriverInterop::SironaDriver::parameter_write(SironaHandle^% handle, String^ name, SironaValue^% value)
 {
 	return 0;
 }
 
-Int32^ SironaDriverInterop::SironaDriver::parameter_commit(SironaHandle^% handle)
+Int32 SironaDriverInterop::SironaDriver::parameter_commit(SironaHandle^% handle)
 {
 	return sironadriver_parameter_commit((void*)handle->Handle);
 }
 
-Int32^ SironaDriverInterop::SironaDriver::get_number_of_parameters(SironaHandle^% handle, UInt32^ number_of_parameters)
+Int32 SironaDriverInterop::SironaDriver::get_number_of_parameters(SironaHandle^% handle, UInt32^% number_of_parameters)
+{
+	uint32_t out;
+	int Return = sironadriver_get_number_of_parameters(handle->Handle, &out);
+	number_of_parameters = out;
+	return Return;
+}
+
+Int32 SironaDriverInterop::SironaDriver::parameter_read_index(SironaHandle^% handle, UInt32^ parameter_index, String^% name, SironaValue^% value)
 {
 	return 0;
 }
 
-Int32^ SironaDriverInterop::SironaDriver::parameter_read_index(SironaHandle^% handle, UInt32^ parameter_index, String^ name, SironaValue^ value)
+Int32 SironaDriverInterop::SironaDriver::bulk_get_chunk_size(SironaHandle^% handle, UInt32^% chunk_size)
+{
+	uint32_t out;
+	int Return = sironadriver_bulk_get_chunk_size(handle->Handle, &out);
+	chunk_size = out;
+	return Return;
+}
+
+Int32 SironaDriverInterop::SironaDriver::bulk_read_data(SironaHandle^% handle, UInt32^% seq_no, SironaValue^% data)
 {
 	return 0;
 }
 
-Int32^ SironaDriverInterop::SironaDriver::bulk_get_chunk_size(SironaHandle^% handle, UInt32^ chunk_size)
+Int32 SironaDriverInterop::SironaDriver::liveECG_bulk_read_data(SironaHandle^% handle, UInt32^% seq_no, UInt32^% status, SironaValue^% data)
 {
 	return 0;
 }
 
-Int32^ SironaDriverInterop::SironaDriver::bulk_read_data(SironaHandle^% handle, UInt32^ seq_no, SironaValue^ data)
+Int32 SironaDriverInterop::SironaDriver::event_get_count(SironaHandle^% handle, UInt32^% event_count)
+{
+	uint32_t out;
+	int Return = sironadriver_event_get_count(handle->Handle, &out);
+	event_count = out;
+	return Return;
+}
+
+Int32 SironaDriverInterop::SironaDriver::event_get_header_item(SironaHandle^% handle, UInt32^ event_no, String^ item, SironaValue^% value)
 {
 	return 0;
 }
 
-Int32^ SironaDriverInterop::SironaDriver::liveECG_bulk_read_data(SironaHandle^% handle, UInt32^ seq_no, UInt32^ status, SironaValue^ data)
+Int32 SironaDriverInterop::SironaDriver::event_start_transfer(SironaHandle^% handle, UInt32^ event_no, UInt32^ first_chunk_no, UInt32^ last_chunk_no)
+{
+	return sironadriver_event_start_transfer(handle->Handle, (uint32_t)event_no, (uint32_t)first_chunk_no, (uint32_t)last_chunk_no);
+}
+
+Int32 SironaDriverInterop::SironaDriver::event_stop_transfer(SironaHandle^% handle)
+{
+	return sironadriver_event_stop_transfer(handle->Handle);
+}
+
+Int32 SironaDriverInterop::SironaDriver::event_erase_all(SironaHandle^% handle)
+{
+	return sironadriver_event_erase_all(handle->Handle);
+}
+
+Int32 SironaDriverInterop::SironaDriver::event_record(SironaHandle^% handle)
+{
+	return sironadriver_event_record(handle->Handle);
+}
+
+Int32 SironaDriverInterop::SironaDriver::event_record_cancel(SironaHandle^% handle)
+{
+	return sironadriver_event_record_cancel(handle->Handle);
+}
+
+Int32 SironaDriverInterop::SironaDriver::event_mark_sent(SironaHandle^% handle, UInt32^ event_no)
+{
+	return sironadriver_event_mark_sent(handle->Handle, (uint32_t)event_no);
+}
+
+Int32 SironaDriverInterop::SironaDriver::annotation_get_size(SironaHandle^% handle, UInt32^ event_no, UInt32^% annotation_size_in_bytes)
+{
+	uint32_t out;
+	int Return = sironadriver_annotation_get_size(handle->Handle, (uint32_t)event_no, &out);
+	annotation_size_in_bytes = out;
+	return Return;
+}
+
+Int32 SironaDriverInterop::SironaDriver::annotation_start_transfer(SironaHandle^% handle, UInt32^ event_no, UInt32^ first_chunk_no, UInt32^ last_chunk_no)
+{
+	return sironadriver_annotation_start_transfer(handle->Handle, (uint32_t)event_no, (uint32_t)first_chunk_no, (uint32_t)last_chunk_no);
+}
+
+Int32 SironaDriverInterop::SironaDriver::annotation_stop_transfer(SironaHandle^% handle)
+{
+	return sironadriver_annotation_stop_transfer(handle->Handle);
+}
+
+Int32 SironaDriverInterop::SironaDriver::holter_get_size(SironaHandle^% handle, UInt32^% holter_size_in_bytes)
+{
+	uint32_t out;
+	int Return = sironadriver_holter_get_size(handle->Handle, &out);
+	holter_size_in_bytes = out;
+	return Return;
+}
+
+Int32 SironaDriverInterop::SironaDriver::holter_start_transfer(SironaHandle^% handle, UInt32^ first_chunk_no, UInt32^ last_chunk_no)
+{
+	return sironadriver_holter_start_transfer(handle->Handle, (uint32_t)first_chunk_no, (uint32_t)last_chunk_no);
+}
+
+Int32 SironaDriverInterop::SironaDriver::holter_stop_transfer(SironaHandle^% handle)
+{
+	return sironadriver_holter_stop_transfer(handle->Handle);
+}
+
+Int32 SironaDriverInterop::SironaDriver::holter_erase(SironaHandle^% handle)
+{
+	return sironadriver_holter_erase(handle->Handle);
+}
+
+Int32 SironaDriverInterop::SironaDriver::liveECG_start_streaming(SironaHandle^% handle)
+{
+	return sironadriver_liveECG_start_streaming(handle->Handle);
+}
+
+Int32 SironaDriverInterop::SironaDriver::liveECG_stop_streaming(SironaHandle^% handle)
+{
+	return sironadriver_liveECG_stop_streaming(handle->Handle);
+}
+
+Int32 SironaDriverInterop::SironaDriver::firmware_upload_start(SironaHandle^% handle, UInt32 fw_size)
+{
+	return sironadriver_firmware_upload_start(handle->Handle, fw_size);
+}
+
+Int32 SironaDriverInterop::SironaDriver::firmware_upload_chunk(SironaHandle^% handle, UInt32 cnunk_no, UInt32 chunk_size, SironaValue^% firmware_chunk)
 {
 	return 0;
 }
 
-Int32^ SironaDriverInterop::SironaDriver::event_get_count(SironaHandle^% handle, UInt32^ event_count)
+Int32 SironaDriverInterop::SironaDriver::firmware_apply(SironaHandle^% handle)
 {
-	return 0;
+	return sironadriver_firmware_apply(handle->Handle);
 }
 
-Int32^ SironaDriverInterop::SironaDriver::event_get_header_item(SironaHandle^% handle, UInt32^ event_no, String^ item, SironaValue^ value)
+Int32 SironaDriverInterop::SironaDriver::get_battery_voltage(SironaHandle^% handle, UInt32^% battery_voltage)
 {
-	return 0;
+	uint32_t out;
+	int Return = sironadriver_get_battery_voltage(handle->Handle, &out);
+	battery_voltage = out;
+	return Return;
 }
 
-Int32^ SironaDriverInterop::SironaDriver::event_start_transfer(SironaHandle^% handle, UInt32^ event_no, UInt32^ first_chunk_no, UInt32^ last_chunk_no)
-{
-	return 0;
-}
-
-Int32^ SironaDriverInterop::SironaDriver::event_stop_transfer(SironaHandle^% handle)
-{
-	return 0;
-}
-
-Int32^ SironaDriverInterop::SironaDriver::event_erase_all(SironaHandle^% handle)
-{
-	return 0;
-}
-
-Int32^ SironaDriverInterop::SironaDriver::event_record(SironaHandle^% handle)
-{
-	return 0;
-}
-
-Int32^ SironaDriverInterop::SironaDriver::event_record_cancel(SironaHandle^% handle)
-{
-	return 0;
-}
-
-Int32^ SironaDriverInterop::SironaDriver::event_mark_sent(SironaHandle^% handle, UInt32^ event_no)
-{
-	return 0;
-}
-
-Int32^ SironaDriverInterop::SironaDriver::annotation_get_size(SironaHandle^% handle, UInt32^ event_no, UInt32^ annotation_size_in_bytes)
-{
-	return 0;
-}
-
-Int32^ SironaDriverInterop::SironaDriver::annotation_start_transfer(SironaHandle^% handle, UInt32^ event_no, UInt32^ first_chunk_no, UInt32^ last_chunk_no)
-{
-	return 0;
-}
-
-Int32^ SironaDriverInterop::SironaDriver::annotation_stop_transfer(SironaHandle^% handle)
-{
-	return 0;
-}
-
-Int32^ SironaDriverInterop::SironaDriver::holter_get_size(SironaHandle^% handle, UInt32^ holter_size_in_bytes)
-{
-	return 0;
-}
-
-Int32^ SironaDriverInterop::SironaDriver::holter_start_transfer(SironaHandle^% handle, UInt32^ first_chunk_no, UInt32^ last_chunk_no)
-{
-	return 0;
-}
-
-Int32^ SironaDriverInterop::SironaDriver::holter_stop_transfer(SironaHandle^% handle)
-{
-	return 0;
-}
-
-Int32^ SironaDriverInterop::SironaDriver::holter_erase(SironaHandle^% handle)
-{
-	return 0;
-}
-
-Int32^ SironaDriverInterop::SironaDriver::liveECG_start_streaming(SironaHandle^% handle)
-{
-	return 0;
-}
-
-Int32^ SironaDriverInterop::SironaDriver::liveECG_stop_streaming(SironaHandle^% handle)
-{
-	return 0;
-}
-
-Int32^ SironaDriverInterop::SironaDriver::firmware_upload_start(SironaHandle^% handle, UInt32 fw_size)
-{
-	return 0;
-}
-
-Int32^ SironaDriverInterop::SironaDriver::firmware_upload_chunk(SironaHandle^% handle, UInt32 cnunk_no, UInt32 chunk_size, void * firmware_chunk)
-{
-	return 0;
-}
-
-Int32^ SironaDriverInterop::SironaDriver::firmware_apply(SironaHandle^% handle)
-{
-	return 0;
-}
-
-Int32^ SironaDriverInterop::SironaDriver::get_battery_voltage(SironaHandle^% handle, UInt32 * battery_voltage)
-{
-	return 0;
-}
-
-Int32^ SironaDriverInterop::SironaDriver::device_ping(SironaHandle^% handle)
+Int32 SironaDriverInterop::SironaDriver::device_ping(SironaHandle^% handle)
 {
 	return sironadriver_device_ping(handle->Handle);
 }
 
-Int32^ SironaDriverInterop::SironaDriver::start_procedure(SironaHandle^% handle)
+Int32 SironaDriverInterop::SironaDriver::start_procedure(SironaHandle^% handle)
 {
 	return sironadriver_start_procedure(handle->Handle);
 }
 
-Int32^ SironaDriverInterop::SironaDriver::stop_procedure(SironaHandle^% handle)
+Int32 SironaDriverInterop::SironaDriver::stop_procedure(SironaHandle^% handle)
 {
 	return sironadriver_stop_procedure(handle->Handle);
 }
 
-Int32^ SironaDriverInterop::SironaDriver::start_status_stream(SironaHandle^% handle, UInt32 parameter)
+Int32 SironaDriverInterop::SironaDriver::start_status_stream(SironaHandle^% handle, UInt32 parameter)
 {
 	return sironadriver_start_status_stream(handle->Handle, (uint32_t)parameter);
 }
 
-Int32^ SironaDriverInterop::SironaDriver::stop_status_stream(SironaHandle^% handle)
+Int32 SironaDriverInterop::SironaDriver::stop_status_stream(SironaHandle^% handle)
 {
 	return sironadriver_stop_status_stream(handle->Handle);
 }
 
-Int32^ SironaDriverInterop::SironaDriver::soft_reset(SironaHandle^% handle)
+Int32 SironaDriverInterop::SironaDriver::soft_reset(SironaHandle^% handle)
 {
 	return sironadriver_soft_reset(handle->Handle);
 }
 
-Int32^ SironaDriverInterop::SironaDriver::set_device_time(SironaHandle^% handle, UInt32^ utc_time, UInt32^ time_zone)
+Int32 SironaDriverInterop::SironaDriver::set_device_time(SironaHandle^% handle, UInt32^ utc_time, UInt32^ time_zone)
 {
 	return sironadriver_set_device_time(handle->Handle, (uint32_t)utc_time, (uint32_t)time_zone);
 }
 
-Int32^ SironaDriverInterop::SironaDriver::file_start_transfer(SironaHandle^% handle, String^ file_name)
+Int32 SironaDriverInterop::SironaDriver::file_start_transfer(SironaHandle^% handle, String^ file_name)
 {
 	IntPtr FNPtr = Marshal::StringToHGlobalAnsi(file_name);
 	char* NativeFileName = static_cast<char*>(FNPtr.ToPointer());
@@ -355,7 +414,7 @@ Int32^ SironaDriverInterop::SironaDriver::file_start_transfer(SironaHandle^% han
 	return Return;
 }
 
-Int32^ SironaDriverInterop::SironaDriver::file_stop_transfer(SironaHandle^% handle)
+Int32 SironaDriverInterop::SironaDriver::file_stop_transfer(SironaHandle^% handle)
 {
 	return sironadriver_file_stop_transfer(handle->Handle);
 }
